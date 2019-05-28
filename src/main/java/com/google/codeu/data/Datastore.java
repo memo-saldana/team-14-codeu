@@ -32,7 +32,7 @@ import java.lang.String;
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
 
-	private DatastoreService datastore;
+  private DatastoreService datastore;
 
 	public Datastore() {
 		datastore = DatastoreServiceFactory.getDatastoreService();
