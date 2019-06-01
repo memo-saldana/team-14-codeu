@@ -5,9 +5,7 @@
  */
  function showMessageFormIfLoggedIn() {
    fetch('/login-status')
-    .then((response) => {
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((loginStatus) => {
       if (loginStatus.isLoggedIn) {
         const messageForm = document.getElementById('message-form');

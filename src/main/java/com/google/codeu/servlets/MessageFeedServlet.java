@@ -54,10 +54,10 @@ public class MessageFeedServlet extends HttpServlet{
      return;
    }
 
-   String user = userService.getCurrentUser().getEmail();
+   String userEmail = userService.getCurrentUser().getEmail();
    String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-   Message message = new Message(user, text);
+   Message message = new Message(userEmail, text);
    datastore.storeMessage(message);
 
    response.sendRedirect("/feed.html");
