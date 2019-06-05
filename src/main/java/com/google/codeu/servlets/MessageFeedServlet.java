@@ -16,6 +16,11 @@ import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
+
 /**
  * Handles fetching all messages for the public feed.
  */
@@ -57,10 +62,15 @@ public class MessageFeedServlet extends HttpServlet{
    String userEmail = userService.getCurrentUser().getEmail();
    String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-   Message message = new Message(userEmail, text);
+   // Process markdown
+   Parser parser = Parser.builder().build();
+   Node document = parser.parse(text);
+   HtmlRenderer renderer = HtmlRenderer.builder().build();
+   String mess = renderer.render(document);
+
+   Message message = new Message(userEmail, mess);
    datastore.storeMessage(message);
 
    response.sendRedirect("/feed.html");
  }
-
 }
