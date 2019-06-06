@@ -90,7 +90,7 @@ public class MessageServlet extends HttpServlet {
 
     String regex = "(https?://\\S+\\.(png|jpg))";
     String replacement = "<img src=\"$1\" />";
-    String textWithImagesReplaced = text.replaceAll(regex, replacement);
+    String textWithImagesReplaced = mess.replaceAll(regex, replacement);
 
     Message message = new Message(user, textWithImagesReplaced);
     datastore.storeMessage(message);
