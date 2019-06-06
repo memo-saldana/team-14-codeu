@@ -62,15 +62,15 @@ public class MessageFeedServlet extends HttpServlet{
 		String userEmail = userService.getCurrentUser().getEmail();
 		String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-   // Process markdown
-   Parser parser = Parser.builder().build();
-   Node document = parser.parse(text);
-   HtmlRenderer renderer = HtmlRenderer.builder().build();
-   String mess = renderer.render(document);
+		// Process markdown
+		Parser parser = Parser.builder().build();
+		Node document = parser.parse(text);
+		HtmlRenderer renderer = HtmlRenderer.builder().build();
+		String mess = renderer.render(document);
 
-   Message message = new Message(userEmail, mess);
-   datastore.storeMessage(message);
+		Message message = new Message(userEmail, mess);
+		datastore.storeMessage(message);
 
-   response.sendRedirect("/feed.html");
- }
+		response.sendRedirect("/feed.html");
+	}
 }
