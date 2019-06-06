@@ -15,6 +15,11 @@ import com.google.codeu.data.User;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
+
 /**
  * Responds with a hard-coded message for testing purposes.
  */
@@ -29,11 +34,11 @@ public class AboutMeServlet extends HttpServlet{
   }
 
   /**
-   * Responds with the "about me " section for a particular user. 
+   * Responds with the "about me " section for a particular user.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
+
     response.setContentType("text/html");
 
     String user = request.getParameter("user");
@@ -60,6 +65,12 @@ public class AboutMeServlet extends HttpServlet{
 
     String userEmail = userService.getCurrentUser().getEmail();
     String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
+
+    // Process markdown
+    Parser parser = Parser.builder().build();
+    Node document = parser.parse(aboutMe);
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    aboutMe = renderer.render(document);
 
     User user = new User(userEmail, aboutMe);
     datastore.storeUser(user);
