@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
@@ -77,8 +81,15 @@ public class MessageServlet extends HttpServlet {
 
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
+    
+    // Process markdown
+    Parser parser = Parser.builder().build();
+    Node document = parser.parse(text);
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    String mess = renderer.render(document);
 
-    Message message = new Message(user, text);
+
+    Message message = new Message(user, mess);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
