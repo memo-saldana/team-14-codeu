@@ -14,6 +14,7 @@ import com.google.codeu.data.User;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.jsoup.nodes.Document.OutputSettings;
 
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
@@ -64,7 +65,7 @@ public class AboutMeServlet extends HttpServlet{
     }
 
     String userEmail = userService.getCurrentUser().getEmail();
-    String aboutMe = Jsoup.clean(request.getParameter("about-me"), Whitelist.none());
+    String aboutMe = Jsoup.clean(request.getParameter("about-me"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
     // Process markdown
     Parser parser = Parser.builder().build();
