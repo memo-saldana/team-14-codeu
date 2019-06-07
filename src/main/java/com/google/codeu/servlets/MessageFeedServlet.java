@@ -15,6 +15,7 @@ import com.google.codeu.data.Message;
 import com.google.gson.Gson;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.jsoup.nodes.Document.OutputSettings;
 
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
@@ -59,8 +60,8 @@ public class MessageFeedServlet extends HttpServlet{
 			return;
 		}
 
-		String userEmail = userService.getCurrentUser().getEmail();
-		String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
+    String userEmail = userService.getCurrentUser().getEmail();
+    String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
 		// Process markdown
 		Parser parser = Parser.builder().build();

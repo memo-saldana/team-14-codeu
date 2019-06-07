@@ -38,6 +38,8 @@
    isn't too close to the border. */
 .message-body {
   margin: 5px;
+  word-wrap: break-word;
+  white-space: pre;
 }
 
 /* Restrict image size */
