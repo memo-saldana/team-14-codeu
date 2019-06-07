@@ -5,7 +5,7 @@ target
 .idea
 *.iml
 .DS_Store
-
+.factorypath
     
 .vscode/*
 !.vscode/settings.json
