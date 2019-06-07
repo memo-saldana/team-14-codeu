@@ -28,50 +28,50 @@ import org.commonmark.renderer.html.HtmlRenderer;
 @WebServlet("/feed")
 public class MessageFeedServlet extends HttpServlet{
 
- private Datastore datastore;
+	private Datastore datastore;
 
- @Override
- public void init() {
-  datastore = new Datastore();
- }
+	@Override
+	public void init() {
+		datastore = new Datastore();
+	}
 
- /**
-  * Responds with a JSON representation of Message data for all users.
-  */
- @Override
- public void doGet(HttpServletRequest request, HttpServletResponse response)
-   throws IOException {
+	/**
+	 * Responds with a JSON representation of Message data for all users.
+	 */
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	throws IOException {
 
-  response.setContentType("application/json");
+		response.setContentType("application/json");
 
-  List<Message> messages = datastore.getAllMessages();
-  Gson gson = new Gson();
-  String json = gson.toJson(messages);
+		List<Message> messages = datastore.getAllMessages();
+		Gson gson = new Gson();
+		String json = gson.toJson(messages);
 
-  response.getOutputStream().println(json);
- }
+		response.getOutputStream().println(json);
+	}
 
- @Override
- public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-   UserService userService = UserServiceFactory.getUserService();
-   if (!userService.isUserLoggedIn()) {
-     response.sendRedirect("/index.html");
-     return;
-   }
+		UserService userService = UserServiceFactory.getUserService();
+		if (!userService.isUserLoggedIn()) {
+			response.sendRedirect("/index.html");
+			return;
+		}
 
-   String userEmail = userService.getCurrentUser().getEmail();
-   String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+    String userEmail = userService.getCurrentUser().getEmail();
+    String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
-   // Process markdown
-   Parser parser = Parser.builder().build();
-   Node document = parser.parse(text);
-   HtmlRenderer renderer = HtmlRenderer.builder().build();
-   String mess = renderer.render(document);
+		// Process markdown
+		Parser parser = Parser.builder().build();
+		Node document = parser.parse(text);
+		HtmlRenderer renderer = HtmlRenderer.builder().build();
+		String mess = renderer.render(document);
 
-   Message message = new Message(userEmail, mess);
-   datastore.storeMessage(message);
+		Message message = new Message(userEmail, mess);
+		datastore.storeMessage(message);
 
-   response.sendRedirect("/feed.html");
- }
+		response.sendRedirect("/feed.html");
+	}
 }

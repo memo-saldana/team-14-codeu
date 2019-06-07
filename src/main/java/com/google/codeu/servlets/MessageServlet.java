@@ -83,13 +83,15 @@ public class MessageServlet extends HttpServlet {
 
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+    String regex = "(https?://\\S+\\.(png|jpg|gif|jpeg))";
+    String replacement = "<img src=\"$1\" />";
+    String textWithImagesReplaced = text.replaceAll(regex, replacement);
 
     // Process markdown
     Parser parser = Parser.builder().build();
-    Node document = parser.parse(text);
+    Node document = parser.parse(textWithImagesReplaced);
     HtmlRenderer renderer = HtmlRenderer.builder().build();
     String mess = renderer.render(document);
-
 
     Message message = new Message(user, mess);
     datastore.storeMessage(message);
