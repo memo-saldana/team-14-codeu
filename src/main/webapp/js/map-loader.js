@@ -15,4 +15,7 @@ function createMap(){
   });
   bridgeInfoWindow.open(map, bridgeMarker);
 
+  bridgeMarker.addListener('click', () => {
+    bridgeInfoWindow.open(map,bridgeMarker);
+  })
 }
