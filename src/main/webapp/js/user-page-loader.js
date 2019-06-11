@@ -101,15 +101,23 @@ function fetchAboutMe(){
     if(aboutMe == ''){
       aboutMe = 'This user has not entered any information yet.';
     }
-    
+
     aboutMeContainer.innerHTML = aboutMe;
 
+  });
+}
+
+function createMDE() {
+  var easyMDE = new EasyMDE({
+    element: document.getElementById('message-input'),
+    showIcons: ["table"]
   });
 }
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
+  createMDE();
   showMessageFormIfViewingSelf();
   fetchMessages();
   fetchAboutMe();

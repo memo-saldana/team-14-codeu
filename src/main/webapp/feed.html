@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Message Feed</title>
-<link rel="stylesheet" href="/css/main.css">
-<link rel="stylesheet" href="/css/user-page.css">
-<script src="/js/feed-loader.js" ></script>
+  <title>Message Feed</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/user-page.css">
+  <script src="/js/feed-loader.js" ></script>
+  <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+  <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 </head>
 <body onload="buildUI()">
- <div id="content">
-  <h1>Message Feed</h1>
-  <hr/>
-  <div id="message-container">Loading...</div>
- </div>
- <br/>
- <br/>
- <form id="message-form" action="/feed" method="POST" class="hidden">
-   Enter a new message:
-   <br/>
-   <textarea name="text" id="message-input"></textarea>
-   <br/>
-   <input type="submit" value="Submit">
- </form>
- <hr/>
+  <div id="content">
+    <h1>Message Feed</h1>
+    <form id="message-form" action="/feed" method="POST" class="hidden">
+      Enter a new message:
+      <br/>
+      <textarea name="text" id="message-input"></textarea>
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
+    <hr/>
+    <div id="message-container">Loading...</div>
+  </div>
 </body>
 </html>
