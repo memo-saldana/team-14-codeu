@@ -44,7 +44,7 @@ public class Datastore {
 		messageEntity.setProperty("user", message.getUser());
 		messageEntity.setProperty("text", message.getText());
 		messageEntity.setProperty("timestamp", message.getTimestamp());
-
+		messageEntity.setProperty("imageUrl", message.getImageUrl());
 		datastore.put(messageEntity);
 	}
 
@@ -63,9 +63,10 @@ public class Datastore {
         UUID id = UUID.fromString(idString);
         String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
+				String imageUrl = (String)entity.getProperty("imageUrl");
         long timestamp = (long) entity.getProperty("timestamp");
 
-					Message message = new Message(id, user, text, timestamp);
+					Message message = new Message(id, user, text, imageUrl, timestamp);
 					messages.add(message);
 				} catch (Exception e) {
 					System.err.println("Error reading message.");

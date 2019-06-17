@@ -83,7 +83,7 @@ function buildMessageDiv(message) {
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
+  bodyDiv.innerHTML = message.text + message.imageUrl;
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
@@ -115,7 +115,7 @@ function fetchBlobstoreUrlAndShowForm() {
       return response.text();
     })
     .then((imageUploadUrl) => {
-      const messageForm = document.getElementById('my-form');
+      const messageForm = document.getElementById('message-form');
       messageForm.action = imageUploadUrl;
       messageForm.classList.remove('hidden');
     });
