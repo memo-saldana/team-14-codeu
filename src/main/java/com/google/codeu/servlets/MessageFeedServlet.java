@@ -17,9 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.nodes.Document.OutputSettings;
 
-import org.commonmark.node.*;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import com.google.codeu.servlets.MarkdownProcessor;
 
 
 /**
@@ -63,11 +61,7 @@ public class MessageFeedServlet extends HttpServlet{
     String userEmail = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
-		// Process markdown
-		Parser parser = Parser.builder().build();
-		Node document = parser.parse(text);
-		HtmlRenderer renderer = HtmlRenderer.builder().build();
-		String mess = renderer.render(document);
+    String mess = MarkdownProcessor.processMarkdown(text);
 
 		Message message = new Message(userEmail, mess);
 		datastore.storeMessage(message);

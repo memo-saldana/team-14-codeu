@@ -16,10 +16,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.nodes.Document.OutputSettings;
 
-import org.commonmark.node.*;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
-
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 
 /**
  * Responds with a hard-coded message for testing purposes.
