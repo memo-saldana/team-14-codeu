@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 // Get ?user=XYZ parameter value
 const urlParams = new URLSearchParams(window.location.search);
 const parameterUsername = urlParams.get('user');
@@ -74,6 +75,7 @@ function fetchMessages() {
  * @return {Element}
  */
 function buildMessageDiv(message) {
+  console.log(message);
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(document.createTextNode(
@@ -107,12 +109,7 @@ function fetchAboutMe(){
   });
 }
 
-function createMDE() {
-  var easyMDE = new EasyMDE({
-    element: document.getElementById('message-input'),
-    showIcons: ["table"]
-  });
-}
+
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {

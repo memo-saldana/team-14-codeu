@@ -60,13 +60,6 @@ function buildMessageDiv(message){
  return messageDiv;
 }
 
-function createMDE() {
-  var easyMDE = new EasyMDE({
-    element: document.getElementById('message-input'),
-    showIcons: ["table"]
-  });
-}
-
 // Fetch data and populate the UI of the page.
 function buildUI(){
  fetchMessages();
