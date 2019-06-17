@@ -31,10 +31,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.nodes.Document.OutputSettings;
 
-
-import org.commonmark.node.*;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import com.google.codeu.servlets.MarkdownProcessor;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -87,11 +84,7 @@ public class MessageServlet extends HttpServlet {
     String replacement = "<img src=\"$1\" />";
     String textWithImagesReplaced = text.replaceAll(regex, replacement);
 
-    // Process markdown
-    Parser parser = Parser.builder().build();
-    Node document = parser.parse(textWithImagesReplaced);
-    HtmlRenderer renderer = HtmlRenderer.builder().build();
-    String mess = renderer.render(document);
+    String mess = MarkdownProcessor.processMarkdown(textWithImagesReplaced);
 
     Message message = new Message(user, mess);
     datastore.storeMessage(message);
