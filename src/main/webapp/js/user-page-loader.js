@@ -83,7 +83,7 @@ function buildMessageDiv(message) {
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text;
+  bodyDiv.innerHTML = message.text + message.imageUrl;
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
@@ -108,9 +108,18 @@ function fetchAboutMe(){
 
   });
 }
-
-
-
+/**Fetches the Blobstore upload url and pass it to the form action*/
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const messageForm = document.getElementById('message-form');
+      messageForm.action = imageUploadUrl;
+      messageForm.classList.remove('hidden');
+    });
+}
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
@@ -118,4 +127,5 @@ function buildUI() {
   showMessageFormIfViewingSelf();
   fetchMessages();
   fetchAboutMe();
+	fetchBlobstoreUrlAndShowForm();
 }

@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.nodes.Document.OutputSettings;
-
+import com.google.codeu.servlets.FormHandlerServlet;
 import com.google.codeu.servlets.MarkdownProcessor;
 
 /** Handles fetching and saving {@link Message} instances. */

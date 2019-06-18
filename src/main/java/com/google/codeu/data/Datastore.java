@@ -44,7 +44,7 @@ public class Datastore {
 		messageEntity.setProperty("user", message.getUser());
 		messageEntity.setProperty("text", message.getText());
 		messageEntity.setProperty("timestamp", message.getTimestamp());
-
+		messageEntity.setProperty("imageUrl", message.getImageUrl());
 		datastore.put(messageEntity);
 	}
 
@@ -63,17 +63,17 @@ public class Datastore {
         UUID id = UUID.fromString(idString);
         String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
+				String imageUrl = (String)entity.getProperty("imageUrl");
         long timestamp = (long) entity.getProperty("timestamp");
 
-					Message message = new Message(id, user, text, timestamp);
+				Message message = new Message(id, user, text, imageUrl, timestamp);
 					messages.add(message);
-				} catch (Exception e) {
-					System.err.println("Error reading message.");
-					System.err.println(entity.toString());
-					e.printStackTrace();
-				}
+			} catch (Exception e) {
+				System.err.println("Error reading message.");
+				System.err.println(entity.toString());
+				e.printStackTrace();
 			}
-
+		}
     return messages;
   }
 
@@ -86,9 +86,9 @@ public class Datastore {
   public List<Message> getMessages(String user) {
 
     Query query =
-        new Query("Message")
-            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-            .addSort("timestamp", SortDirection.DESCENDING);
+    	new Query("Message")
+      	.setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+        .addSort("timestamp", SortDirection.DESCENDING);
 
     return processQuery(query);
   }
@@ -102,7 +102,7 @@ public class Datastore {
    public List<Message> getAllMessages() {
 
      Query query = new Query("Message")
-        .addSort("timestamp", SortDirection.DESCENDING);
+      	.addSort("timestamp", SortDirection.DESCENDING);
 
     return processQuery(query);
    }
