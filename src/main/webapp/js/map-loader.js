@@ -8,11 +8,10 @@ let map;
  * @param {String} title 
  * @param {String} description 
  */
-function addLandmark(map, lat, lng, title, description){
+function addDisplayMarker(lat, lng, description){
   const marker = new google.maps.Marker({
     position: { lat: lat, lng: lng },
-    map: map,
-    title: title
+    map: map
   })
   const infoWindow = new google.maps.InfoWindow({
     content: description
@@ -33,14 +32,23 @@ function createMap(){
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   })
-  addLandmark(map, 37.819021, -122.477946, "Golden Gate Bridge", "This is the Golden Gate Bridge")
-  addLandmark(map, 37.802122, -122.418805, "Lombard Street", "This is Lombard St.")
-  addLandmark(map, 37.811039, -122.415175, "Fishermans Wharf", "This is Fishermans Wharf")
 
+  fetchMarkers();
 }
 
- /** Creates a marker that shows a textbox the user can edit. */
- function createMarkerForEdit(lat, lng){
+ /** Fetches markers from the backend and adds them to the map. */
+function fetchMarkers(){
+  fetch('/markers').then((response) => {
+    return response.json();
+  }).then((markers) => {
+    markers.forEach((marker) => {
+     addDisplayMarker(marker.lat, marker.lng, marker.content)
+    });
+  });
+}
+
+/** Creates a marker that shows a textbox the user can edit. */
+function createMarkerForEdit(lat, lng){
   // If we're already showing an editable marker, then remove it.
   if(editMarker){
    editMarker.setMap(null);
@@ -50,7 +58,7 @@ function createMap(){
     map: map
   });
   const infoWindow = new google.maps.InfoWindow({
-    content: 'Marker for testing'
+    content: buildInfoWindowInput(lat,lng)
   });
   // When the user closes the editable info window, remove the marker.
   google.maps.event.addListener(infoWindow, 'closeclick', () => {
@@ -58,3 +66,32 @@ function createMap(){
   });
   infoWindow.open(map, editMarker);
  }
+
+/** Builds and returns HTML elements that show an editable textbox and a submit button. */
+function buildInfoWindowInput(lat, lng){
+  const textBox = document.createElement('textarea');
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode('Submit'));
+  button.onclick = () => {
+    postMarker(lat, lng, textBox.value);
+    addDisplayMarker(lat, lng, textBox.value);
+    editMarker.setMap(null);
+  };
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement('br'));
+  containerDiv.appendChild(button);
+  return containerDiv;
+}
+
+/** Sends a marker to the backend for saving. */
+function postMarker(lat, lng, content){
+  const params = new URLSearchParams();
+  params.append('lat', lat);
+  params.append('lng', lng);
+  params.append('content', content);
+  fetch('/markers', {
+    method: 'POST',
+    body: params
+  });
+}
