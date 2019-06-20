@@ -69,25 +69,6 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 
-body {
-  margin: auto;
-  width: 90%;
-  padding: 10px;
-  background: linear-gradient(white, #FF7F50) fixed;
-  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-}
-
-nav {
-  background-color: #FF7F50;
-  font-size: 12pt;
-  padding: 8px;
-}
-
-nav a {
-  color: white;
-  margin-right: 10px;
-}
-
 h2 {
   margin: 0;
 }
