@@ -78,15 +78,20 @@ function buildMessageDiv(message) {
   console.log(message);
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
-  headerDiv.appendChild(document.createTextNode(
+  headerDiv.classList.add('padded');
+
+	headerDiv.appendChild(document.createTextNode(
       message.user + ' - ' + new Date(message.timestamp)));
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
-  bodyDiv.innerHTML = message.text + message.imageUrl;
+  bodyDiv.classList.add('padded');
+	bodyDiv.innerHTML = message.text + message.imageUrl;
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
+	messageDiv.classList.add('rounded');
+	messageDiv.classList.add('panel');
   messageDiv.appendChild(headerDiv);
   messageDiv.appendChild(bodyDiv);
 
