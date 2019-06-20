@@ -22,7 +22,6 @@ body {
   padding: 10px;
   background: linear-gradient(white, #FF7F50) fixed;
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-
 }
 
 nav {
@@ -32,8 +31,8 @@ nav {
 }
 
 nav a {
- 	color: white;
- 	margin-right: 10px;
+  color: white;
+  margin-right: 10px;
 }
 
 /* Remove bullet points from navigation bar. */
