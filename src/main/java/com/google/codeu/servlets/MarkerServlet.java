@@ -46,4 +46,16 @@ public class MarkerServlet extends HttpServlet {
     Marker marker = new Marker(lat, lng, content);
     datastore.storeMarker(marker);
   }
+
+  @Override
+  public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+    String latStr = request.getParameter("lat");
+    System.out.println(latStr);
+    double lat = Double.parseDouble(request.getParameter("lat"));
+    double lng = Double.parseDouble(request.getParameter("lng"));
+
+    Marker marker = new Marker(lat,lng);
+
+    datastore.removeMarker(marker);
+  }
 }

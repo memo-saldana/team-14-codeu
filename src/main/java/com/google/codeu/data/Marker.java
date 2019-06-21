@@ -10,6 +10,10 @@ public class Marker {
     this.content = content;
   }
 
+  public Marker(double lat, double lng){
+    this(lat, lng, "");
+  }
+
   public double getLat() {
     return lat;
   }

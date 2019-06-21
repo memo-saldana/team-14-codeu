@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
@@ -173,5 +174,25 @@ public class Datastore {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(markerEntity);
+  }
+
+  public Marker removeMarker(Marker marker) {
+    Query query = new Query("Marker")
+      .setFilter(CompositeFilterOperator.and(
+        new Query.FilterPredicate("lat", FilterOperator.EQUAL, marker.getLat()),
+        new Query.FilterPredicate("lng", FilterOperator.EQUAL, marker.getLng())));
+    PreparedQuery results = datastore.prepare(query);
+    Entity markerEntity = results.asSingleEntity();
+    
+    // if not found, return null
+    if(markerEntity == null) {
+      return null;
+    }
+    
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.delete(markerEntity.getKey());
+    
+    Marker deletedMarker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),(String) markerEntity.getProperty("content") );
+    return deletedMarker;
   }
 }
