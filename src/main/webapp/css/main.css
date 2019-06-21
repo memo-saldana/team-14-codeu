@@ -16,7 +16,23 @@
 
 /* Prevent the page from becoming too wide. */
 body {
-  max-width: 600px;
+  max-width: 800px;
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+  background: linear-gradient(white, #FF7F50) fixed;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+nav {
+  background-color: #FF7F50;
+ 	font-size: 12pt;
+  padding: 8px;
+}
+
+nav a {
+  color: white;
+  margin-right: 10px;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -29,6 +45,10 @@ nav ul {
 nav li {
   display: inline-block;
   margin-right: 10px
+}
+
+h1 {
+ color: #f88379;
 }
 
 #map {

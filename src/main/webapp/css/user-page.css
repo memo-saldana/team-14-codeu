@@ -18,7 +18,7 @@
    and will fill the width of its parent element. */
 #message-input {
   height: 100px;
-  width: 100%;
+  width: 99%;
 }
 
 /* Give each message a rounded border. */
@@ -32,6 +32,8 @@
 .message-header {
   border-bottom: thin solid black;
   padding: 5px;
+	color: white;
+  background-image: linear-gradient(to right, #f88379 , #FF7F50);
 }
 
 /* Give the message body a margin so the text
@@ -47,7 +49,9 @@
   display: block;
   margin-top: 25px;
   max-width: 75%;
+	font: 12pt cursive;
 }
+
 /* Use this to hide certain elements like forms if the
    user is not logged in or viewing their own page. */
 .hidden {
@@ -63,4 +67,51 @@ th, td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+}
+
+h2 {
+  margin: 0;
+}
+
+input[type=submit] {
+  background-color: #FF7F50;
+  height: 50px;
+  width: 100px;
+  font-size: 14pt;
+	color: white;
+}
+
+#content {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#message-container {
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#page-title {
+	color: #f88379;
+}
+
+.panel {
+  background-color: white;
+  margin-top: 20px;
+}
+
+.centered{
+  text-align: center;
+}
+
+.padded {
+  padding: 10px;
+}
+
+.rounded {
+  border: thin solid white;
+  border-radius: 5px;
+  overflow: hidden;
 }
