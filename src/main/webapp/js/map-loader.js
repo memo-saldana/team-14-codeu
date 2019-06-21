@@ -1,11 +1,10 @@
-let editMarker; 
+let editMarker;
 let map;
+let displayMarkers = {};
  /**
  * Adds a new marker with a toggable info window
- * @param {Map} map 
  * @param {Number} lat 
  * @param {Number} lng 
- * @param {String} title 
  * @param {String} description 
  */
 function addDisplayMarker(lat, lng, description){
@@ -14,11 +13,15 @@ function addDisplayMarker(lat, lng, description){
     map: map
   })
   const infoWindow = new google.maps.InfoWindow({
-    content: description
+    content: buildDeletableMarker( lat, lng, description)
   })
   marker.addListener('click', () => {
     infoWindow.open(map, marker)
   })
+
+  // Uses a dictionary with both lat and lng for faster lookup
+  if(!displayMarkers[lat]) displayMarkers[lat] = {};
+  displayMarkers[lat][lng] = marker;
 }
 
 /**
@@ -94,4 +97,37 @@ function postMarker(lat, lng, content){
     method: 'POST',
     body: params
   });
+}
+
+function buildDeletableMarker(lat, lng, content){ 
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode('Delete Marker'));
+  button.onclick =() => {
+    removeMarker(lat,lng);
+  }
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(document.createTextNode(content))
+  containerDiv.appendChild(document.createElement('br'))
+  containerDiv.appendChild(button)
+
+  return containerDiv;
+}
+
+function removeMarker(lat, lng){
+  let baseURL = window.location.protocol + '//' + window.location.host;  
+  let url = new URL(baseURL+'/markers');
+  url.searchParams.append('lat',lat);
+  url.searchParams.append('lng',lng);
+  
+  // Removes marker from datastore
+  fetch(url, {
+    method:'DELETE'
+  }).then( response => {
+  
+    // Finds marker after being deleted from datastore,
+    //  removes it from map, then from dictionary
+    displayMarkers[lat][lng].setMap(null);
+    delete displayMarkers[lat][lng];
+  })
+  .catch(error => console.log(error));
 }
