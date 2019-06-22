@@ -20,7 +20,9 @@ function addDisplayMarker(lat, lng, description){
   })
 
   // Uses a dictionary with both lat and lng for faster lookup
-  if(!displayMarkers[lat]) displayMarkers[lat] = {};
+  if(!displayMarkers[lat]){
+    displayMarkers[lat] = {};
+  } 
   displayMarkers[lat][lng] = marker;
 }
 
@@ -41,9 +43,9 @@ function createMap(){
 
  /** Fetches markers from the backend and adds them to the map. */
 function fetchMarkers(){
-  fetch('/markers').then((response) => {
-    return response.json();
-  }).then((markers) => {
+  fetch('/markers')
+  .then((response) => response.json())
+  .then((markers) => {
     markers.forEach((marker) => {
      addDisplayMarker(marker.lat, marker.lng, marker.content)
     });
@@ -114,16 +116,18 @@ function buildDeletableMarker(lat, lng, content){
 }
 
 function removeMarker(lat, lng){
-  let baseURL = window.location.protocol + '//' + window.location.host;  
-  let url = new URL(baseURL+'/markers');
+  const baseURL = window.location.protocol + '//' + window.location.host;  
+  const url = new URL(baseURL+'/markers');
   url.searchParams.append('lat',lat);
   url.searchParams.append('lng',lng);
   
   // Removes marker from datastore
   fetch(url, {
     method:'DELETE'
-  }).then( response => {
-  
+  })
+  .then(response => response.json())
+  .then( marker => {
+    // console.log('response :', response);
     // Finds marker after being deleted from datastore,
     //  removes it from map, then from dictionary
     displayMarkers[lat][lng].setMap(null);

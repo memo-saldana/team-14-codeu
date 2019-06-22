@@ -19,10 +19,10 @@ public class MarkerServlet extends HttpServlet {
 
   private Datastore datastore;
 
-	@Override
-	public void init() {
-		datastore = new Datastore();
-	}
+  @Override
+  public void init() {
+    datastore = new Datastore();
+  }
 
   /** Responds with a JSON array containing marker data. */
   @Override
@@ -48,7 +48,9 @@ public class MarkerServlet extends HttpServlet {
   }
 
   @Override
-  public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+  public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    response.setContentType("application/json");
+
     String latStr = request.getParameter("lat");
     System.out.println(latStr);
     double lat = Double.parseDouble(request.getParameter("lat"));
@@ -56,6 +58,15 @@ public class MarkerServlet extends HttpServlet {
 
     Marker marker = new Marker(lat,lng);
 
-    datastore.removeMarker(marker);
+    Marker deletedMarker = datastore.removeMarker(marker);
+    if(deletedMarker == null){
+      String resp = "Marker does not exist.";
+      response.getOutputStream().println(resp);
+    }
+    else {
+      Gson gson = new Gson();
+      String json = gson.toJson(deletedMarker);
+      response.getOutputStream().println(json);
+    }
   }
 }
