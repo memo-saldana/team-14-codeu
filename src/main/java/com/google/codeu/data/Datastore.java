@@ -146,11 +146,10 @@ public class Datastore {
     
     return user;
   }
-  /** Fetches markers from Datastore. */
+
   public List<Marker> getMarkers() {
     List<Marker> markers = new ArrayList<>();
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query("Marker");
     PreparedQuery results = datastore.prepare(query);
 
@@ -165,14 +164,12 @@ public class Datastore {
     return markers;
   }
 
-  /** Stores a marker in Datastore. */
   public void storeMarker(Marker marker) {
     Entity markerEntity = new Entity("Marker");
     markerEntity.setProperty("lat", marker.getLat());
     markerEntity.setProperty("lng", marker.getLng());
     markerEntity.setProperty("content", marker.getContent());
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(markerEntity);
   }
 
@@ -189,7 +186,6 @@ public class Datastore {
       return null;
     }
     
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.delete(markerEntity.getKey());
     
     Marker deletedMarker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),(String) markerEntity.getProperty("content") );
