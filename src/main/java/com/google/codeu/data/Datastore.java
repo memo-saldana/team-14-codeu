@@ -177,7 +177,8 @@ public class Datastore {
     Query query = new Query("Marker")
       .setFilter(CompositeFilterOperator.and(
         new Query.FilterPredicate("lat", FilterOperator.EQUAL, marker.getLat()),
-        new Query.FilterPredicate("lng", FilterOperator.EQUAL, marker.getLng())));
+        new Query.FilterPredicate("lng", FilterOperator.EQUAL, marker.getLng()),
+        new Query.FilterPredicate("content", FilterOperator.EQUAL, marker.getContent())));
     PreparedQuery results = datastore.prepare(query);
     Entity markerEntity = results.asSingleEntity();
     

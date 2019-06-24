@@ -38,9 +38,21 @@ public class MarkerServlet extends HttpServlet {
 
   /** Accepts a POST request containing a new marker. */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) {
-    double lat = Double.parseDouble(request.getParameter("lat"));
-    double lng = Double.parseDouble(request.getParameter("lng"));
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String latStr = request.getParameter("lat");
+    String lngStr = request.getParameter("lng");
+    if(latStr == null){
+      String resp = "Lat is not defined";
+      response.getOutputStream().println(resp);
+    }
+    
+    if(lngStr == null){
+      String resp = "Lat is not defined";
+      response.getOutputStream().println(resp);
+    }
+    double lat = Double.parseDouble(latStr);
+    double lng = Double.parseDouble(lngStr);
+
     String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
 
     Marker marker = new Marker(lat, lng, content);
@@ -52,11 +64,26 @@ public class MarkerServlet extends HttpServlet {
     response.setContentType("application/json");
 
     String latStr = request.getParameter("lat");
-    System.out.println(latStr);
-    double lat = Double.parseDouble(request.getParameter("lat"));
-    double lng = Double.parseDouble(request.getParameter("lng"));
+    String lngStr = request.getParameter("lng");
+    String content = request.getParameter("content");
+    
+    if(latStr == null){
+      String resp = "Lat is not defined";
+      response.getOutputStream().println(resp);
+    }
+    if(lngStr == null){
+      String resp = "Lng is not defined";
+      response.getOutputStream().println(resp);
+    }
+    if(content == null){
+      String resp = "Content is not defined";
+      response.getOutputStream().println(resp);
+    }
 
-    Marker marker = new Marker(lat,lng);
+    double lat = Double.parseDouble(latStr);
+    double lng = Double.parseDouble(lngStr);
+
+    Marker marker = new Marker(lat,lng, content);
 
     Marker deletedMarker = datastore.removeMarker(marker);
     if(deletedMarker == null){

@@ -105,7 +105,7 @@ function buildDeletableMarker(lat, lng, content){
   const button = document.createElement('button');
   button.appendChild(document.createTextNode('Delete Marker'));
   button.onclick =() => {
-    removeMarker(lat,lng);
+    removeMarker(lat,lng, content);
   }
   const containerDiv = document.createElement('div');
   containerDiv.appendChild(document.createTextNode(content))
@@ -115,11 +115,12 @@ function buildDeletableMarker(lat, lng, content){
   return containerDiv;
 }
 
-function removeMarker(lat, lng){
+function removeMarker(lat, lng, content){
   const baseURL = window.location.protocol + '//' + window.location.host;  
   const url = new URL(baseURL+'/markers');
   url.searchParams.append('lat',lat);
   url.searchParams.append('lng',lng);
+  url.searchParams.append('content',content);
   
   // Removes marker from datastore
   fetch(url, {
@@ -127,7 +128,6 @@ function removeMarker(lat, lng){
   })
   .then(response => response.json())
   .then( marker => {
-    // console.log('response :', response);
     // Finds marker after being deleted from datastore,
     //  removes it from map, then from dictionary
     displayMarkers[lat][lng].setMap(null);
