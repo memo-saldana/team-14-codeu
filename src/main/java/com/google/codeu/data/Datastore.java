@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
@@ -144,5 +145,51 @@ public class Datastore {
     User user = new User(email, aboutMe);
     
     return user;
+  }
+
+  public List<Marker> getMarkers() {
+    List<Marker> markers = new ArrayList<>();
+
+    Query query = new Query("Marker");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      double lat = (double) entity.getProperty("lat");
+      double lng = (double) entity.getProperty("lng");
+      String content = (String) entity.getProperty("content");
+
+      Marker marker = new Marker(lat, lng, content);
+      markers.add(marker);
+    }
+    return markers;
+  }
+
+  public void storeMarker(Marker marker) {
+    Entity markerEntity = new Entity("Marker");
+    markerEntity.setProperty("lat", marker.getLat());
+    markerEntity.setProperty("lng", marker.getLng());
+    markerEntity.setProperty("content", marker.getContent());
+
+    datastore.put(markerEntity);
+  }
+
+  public Marker removeMarker(Marker marker) {
+    Query query = new Query("Marker")
+      .setFilter(CompositeFilterOperator.and(
+        new Query.FilterPredicate("lat", FilterOperator.EQUAL, marker.getLat()),
+        new Query.FilterPredicate("lng", FilterOperator.EQUAL, marker.getLng()),
+        new Query.FilterPredicate("content", FilterOperator.EQUAL, marker.getContent())));
+    PreparedQuery results = datastore.prepare(query);
+    Entity markerEntity = results.asSingleEntity();
+    
+    // if not found, return null
+    if(markerEntity == null) {
+      return null;
+    }
+    
+    datastore.delete(markerEntity.getKey());
+    
+    Marker deletedMarker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),(String) markerEntity.getProperty("content") );
+    return deletedMarker;
   }
 }
