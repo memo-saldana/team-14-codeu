@@ -91,5 +91,5 @@ public class FormHandlerServlet extends HttpServlet {
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
     return imagesService.getServingUrl(options);
-  }
+  } 
 }

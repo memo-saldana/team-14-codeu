@@ -157,8 +157,8 @@ public class Datastore {
       double lat = (double) entity.getProperty("lat");
       double lng = (double) entity.getProperty("lng");
       String content = (String) entity.getProperty("content");
-
-      Marker marker = new Marker(lat, lng, content);
+      String landmark = (String) entity.getProperty("landmark");
+      Marker marker = new Marker(lat, lng, content, landmark);
       markers.add(marker);
     }
     return markers;
@@ -169,7 +169,7 @@ public class Datastore {
     markerEntity.setProperty("lat", marker.getLat());
     markerEntity.setProperty("lng", marker.getLng());
     markerEntity.setProperty("content", marker.getContent());
-
+    markerEntity.setProperty("landmark", marker.getLandmark());
     datastore.put(markerEntity);
   }
 

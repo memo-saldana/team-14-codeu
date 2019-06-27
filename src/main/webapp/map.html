@@ -15,7 +15,17 @@
     </ul>
   </nav>
   <h1>Map with Marker storage</h1>
+  <p id="images"></p>
   <div id="map"></div>
   <p>This page shows a Map with stored markers!</p>
+  <form id="marker-form"  class="hidden">
+    <h2>Landmark:</h2>
+    <p>Title:</p>
+    <textarea name="title" id="title-input" class="rounded"></textarea>
+    <p>Upload an image:</p>
+    <input type="file" name="landmark" id="landmark-input">
+    <br/><br/>
+    <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
+  </form>
 </body>
 </html>

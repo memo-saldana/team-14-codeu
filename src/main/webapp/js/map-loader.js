@@ -37,7 +37,7 @@ function createMap(){
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   })
-
+  // document.getElementById('btnSubmit').addEventListener('click',postMarker)
   fetchMarkers();
 }
 
@@ -46,6 +46,7 @@ function fetchMarkers(){
   fetch('/markers')
   .then((response) => response.json())
   .then((markers) => {
+    console.log('markers :', markers);
     markers.forEach((marker) => {
      addDisplayMarker(marker.lat, marker.lng, marker.content)
     });
@@ -63,7 +64,7 @@ function createMarkerForEdit(lat, lng){
     map: map
   });
   const infoWindow = new google.maps.InfoWindow({
-    content: buildInfoWindowInput(lat,lng)
+    content: buildInfoWindowInput()
   });
   // When the user closes the editable info window, remove the marker.
   google.maps.event.addListener(infoWindow, 'closeclick', () => {
@@ -73,32 +74,70 @@ function createMarkerForEdit(lat, lng){
  }
 
 /** Builds and returns HTML elements that show an editable textbox and a submit button. */
-function buildInfoWindowInput(lat, lng){
-  const textBox = document.createElement('textarea');
-  const button = document.createElement('button');
-  button.appendChild(document.createTextNode('Submit'));
-  button.onclick = () => {
-    postMarker(lat, lng, textBox.value);
-    addDisplayMarker(lat, lng, textBox.value);
-    editMarker.setMap(null);
-  };
+function buildInfoWindowInput(){
+  
+  // const textBox = document.createElement('textarea');
+  // const button = document.createElement('button');
+  // button.appendChild(document.createTextNode('Submit'));
+  // button.onclick = () => {
+  //   postMarker(lat, lng, textBox.value);
+  //   addDisplayMarker(lat, lng, textBox.value);
+  //   editMarker.setMap(null);
+  // };
+
+  const markerForm = document.getElementById('marker-form').cloneNode(true);
   const containerDiv = document.createElement('div');
-  containerDiv.appendChild(textBox);
-  containerDiv.appendChild(document.createElement('br'));
-  containerDiv.appendChild(button);
+  containerDiv.appendChild(markerForm);
+  markerForm.classList.remove('hidden');
   return containerDiv;
 }
 
+function wait(){
+  setTimeout(()=>{
+    console.log("Hello world");
+    
+  }, 5000)
+}
 /** Sends a marker to the backend for saving. */
-function postMarker(lat, lng, content){
-  const params = new URLSearchParams();
-  params.append('lat', lat);
-  params.append('lng', lng);
-  params.append('content', content);
-  fetch('/markers', {
-    method: 'POST',
-    body: params
-  });
+function postMarker(ev){
+  // Don't let form be submitted
+  ev.preventDefault();
+  // Get all info from marker and form
+  let lat = editMarker.getPosition().lat();
+  let lng = editMarker.getPosition().lng();
+  let content = document.getElementById('title-input').value;
+  let landmark = document.getElementById('landmark-input').files[0];
+  // Get blobstore upload url
+  fetch('/markers/uploadURL')
+  .then(response => response.text())
+  .then(uploadURL => {
+
+    let h = new Headers();
+    h.append('Accept', 'application/json');
+    let fd = new FormData();
+    fd.append('lat', lat);
+    fd.append('lng', lng);
+    fd.append('content', content);
+    fd.append('landmark',landmark);
+  
+    // Create request to upload url
+    let req = new Request(uploadURL,{
+      method: 'POST',
+      headers: h,
+      body: fd
+    })
+    console.log('req :', req);
+    return fetch(req)
+  })
+  .then( response => response.json())
+  .then(marker => {
+    
+    // Create display marker for this newly created landmark
+    editMarker.setMap(null);
+    addDisplayMarker(lat, lng, content);
+  })
+  // Future integrations: Create dialog box with errors
+  .catch(err => console.log(err))
 }
 
 function buildDeletableMarker(lat, lng, content){ 
