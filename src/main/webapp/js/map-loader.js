@@ -1,22 +1,39 @@
-let editMarker;
-let map;
-let displayMarkers = {};
- /**
+let editMarker,
+    map,
+    displayMarkers = {},
+    currentImage,
+    currentActiveMarker;
+ 
+/**
  * Adds a new marker with a toggable info window
  * @param {Number} lat 
  * @param {Number} lng 
  * @param {String} description 
  */
-function addDisplayMarker(lat, lng, description){
+function addDisplayMarker(lat, lng, title, image){
   const marker = new google.maps.Marker({
     position: { lat: lat, lng: lng },
     map: map
   })
   const infoWindow = new google.maps.InfoWindow({
-    content: buildDeletableMarker( lat, lng, description)
+    content: buildDeletableMarker( lat, lng, title)
   })
   marker.addListener('click', () => {
+    if(currentActiveMarker) {
+
+    }
+
     infoWindow.open(map, marker)
+    // If there is a previous image displayed, remove it
+    if(currentImage){
+      currentImage.src = image;
+    } else {
+      // Show current image'
+      let div = document.getElementById('landmark-div');
+      currentImage = document.createElement('img')
+      currentImage.src = image;
+      div.appendChild(currentImage);
+    }
   })
 
   // Uses a dictionary with both lat and lng for faster lookup
@@ -48,7 +65,7 @@ function fetchMarkers(){
   .then((markers) => {
     console.log('markers :', markers);
     markers.forEach((marker) => {
-     addDisplayMarker(marker.lat, marker.lng, marker.content)
+     addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark)
     });
   });
 }
@@ -131,10 +148,10 @@ function postMarker(ev){
   })
   .then( response => response.json())
   .then(marker => {
-    
+
     // Create display marker for this newly created landmark
     editMarker.setMap(null);
-    addDisplayMarker(lat, lng, content);
+    addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
   })
   // Future integrations: Create dialog box with errors
   .catch(err => console.log(err))
