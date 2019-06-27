@@ -2,8 +2,8 @@ let editMarker,
     map,
     displayMarkers = {},
     currentImage,
-    currentActiveMarker;
- 
+    currentActiveInfoWindow;
+
 /**
  * Adds a new marker with a toggable info window
  * @param {Number} lat 
@@ -18,22 +18,9 @@ function addDisplayMarker(lat, lng, title, image){
   const infoWindow = new google.maps.InfoWindow({
     content: buildDeletableMarker( lat, lng, title)
   })
+  console.log('infoWindow1 :', infoWindow);
   marker.addListener('click', () => {
-    if(currentActiveMarker) {
-
-    }
-
-    infoWindow.open(map, marker)
-    // If there is a previous image displayed, remove it
-    if(currentImage){
-      currentImage.src = image;
-    } else {
-      // Show current image'
-      let div = document.getElementById('landmark-div');
-      currentImage = document.createElement('img')
-      currentImage.src = image;
-      div.appendChild(currentImage);
-    }
+    showLandmark(image, infoWindow, marker);
   })
 
   // Uses a dictionary with both lat and lng for faster lookup
@@ -41,6 +28,7 @@ function addDisplayMarker(lat, lng, title, image){
     displayMarkers[lat] = {};
   } 
   displayMarkers[lat][lng] = marker;
+  return { infoWindow, marker };
 }
 
 /**
@@ -73,9 +61,8 @@ function fetchMarkers(){
 /** Creates a marker that shows a textbox the user can edit. */
 function createMarkerForEdit(lat, lng){
   // If we're already showing an editable marker, then remove it.
-  if(editMarker){
-   editMarker.setMap(null);
-  }
+  closeOtherDialogs();
+
   editMarker = new google.maps.Marker({
     position: {lat: lat, lng: lng},
     map: map
@@ -93,15 +80,6 @@ function createMarkerForEdit(lat, lng){
 /** Builds and returns HTML elements that show an editable textbox and a submit button. */
 function buildInfoWindowInput(){
   
-  // const textBox = document.createElement('textarea');
-  // const button = document.createElement('button');
-  // button.appendChild(document.createTextNode('Submit'));
-  // button.onclick = () => {
-  //   postMarker(lat, lng, textBox.value);
-  //   addDisplayMarker(lat, lng, textBox.value);
-  //   editMarker.setMap(null);
-  // };
-
   const markerForm = document.getElementById('marker-form').cloneNode(true);
   const containerDiv = document.createElement('div');
   containerDiv.appendChild(markerForm);
@@ -109,12 +87,7 @@ function buildInfoWindowInput(){
   return containerDiv;
 }
 
-function wait(){
-  setTimeout(()=>{
-    console.log("Hello world");
-    
-  }, 5000)
-}
+
 /** Sends a marker to the backend for saving. */
 function postMarker(ev){
   // Don't let form be submitted
@@ -143,7 +116,7 @@ function postMarker(ev){
       headers: h,
       body: fd
     })
-    console.log('req :', req);
+
     return fetch(req)
   })
   .then( response => response.json())
@@ -151,7 +124,9 @@ function postMarker(ev){
 
     // Create display marker for this newly created landmark
     editMarker.setMap(null);
-    addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
+    let {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
+    showLandmark(marker.landmark, infoWindow, mapMarker);
+    infoWindow.open(map, mapMarker);
   })
   // Future integrations: Create dialog box with errors
   .catch(err => console.log(err))
@@ -187,7 +162,36 @@ function removeMarker(lat, lng, content){
     // Finds marker after being deleted from datastore,
     //  removes it from map, then from dictionary
     displayMarkers[lat][lng].setMap(null);
+    currentImage.parentNode.removeChild(currentImage);
+    currentImage = null;
     delete displayMarkers[lat][lng];
   })
   .catch(error => console.log(error));
+}
+
+function closeOtherDialogs(){
+  if(editMarker){
+    editMarker.setMap(null);
+  }
+  if(currentActiveInfoWindow){
+    currentActiveInfoWindow.close();
+  }
+}
+
+function showLandmark(image, infoWindow, marker){
+  closeOtherDialogs();
+  console.log('infoWindow :', infoWindow);
+  if(currentImage){
+    // If there is a previous image displayed, remove it
+    currentImage.src = image;
+    
+  } else {
+    // Show current image'
+    let div = document.getElementById('landmark-div');
+    currentImage = document.createElement('img')
+    currentImage.src = image;
+    div.appendChild(currentImage);
+  }
+  infoWindow.open(map, marker);
+  currentActiveInfoWindow = infoWindow;
 }
