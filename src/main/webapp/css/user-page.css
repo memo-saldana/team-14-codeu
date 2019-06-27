@@ -96,22 +96,3 @@ input[type=submit] {
 #page-title {
 	color: #f88379;
 }
-
-.panel {
-  background-color: white;
-  margin-top: 20px;
-}
-
-.centered{
-  text-align: center;
-}
-
-.padded {
-  padding: 10px;
-}
-
-.rounded {
-  border: thin solid white;
-  border-radius: 5px;
-  overflow: hidden;
-}
