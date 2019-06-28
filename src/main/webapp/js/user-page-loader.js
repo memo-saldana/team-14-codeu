@@ -43,7 +43,6 @@ function showMessageFormIfViewingSelf() {
             loginStatus.username == parameterUsername) {
           const messageForm = document.getElementById('message-form');
           messageForm.classList.remove('hidden');
-          document.getElementById('about-me-form').classList.remove('hidden');
         }
       });
 }
@@ -75,7 +74,6 @@ function fetchMessages() {
  * @return {Element}
  */
 function buildMessageDiv(message) {
-  console.log(message);
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.classList.add('padded');
@@ -86,7 +84,13 @@ function buildMessageDiv(message) {
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
   bodyDiv.classList.add('padded');
-	bodyDiv.innerHTML = message.text + message.imageUrl;
+  // If user doesn't attach image file, dont' include the imageUrl in the message body.
+  if (message.imageUrl == '<img src="null" />') {
+     bodyDiv.innerHTML = message.text;
+  }
+  else {
+     bodyDiv.innerHTML = message.text + message.imageUrl;
+  }
 
   const messageDiv = document.createElement('div');
   messageDiv.classList.add('message-div');
@@ -124,6 +128,14 @@ function fetchBlobstoreUrlAndShowForm() {
       messageForm.action = imageUploadUrl;
       messageForm.classList.remove('hidden');
     });
+}
+
+function on() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
 }
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
