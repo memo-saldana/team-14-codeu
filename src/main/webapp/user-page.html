@@ -78,8 +78,8 @@ limitations under the License.
               <textarea class="form-control" name="recommendation" placeholder="Best place to visit in your city?" rows=3 required></textarea>
             </div>
 
-            <input type="submit" value="Submit" class="rounded" style="float:right; margin-right:20px; display: inline-block">
-            <input type="button" onclick="off()" value="Cancel" class="rounded" style="float:right; margin-right: 15px; display: inline-block">
+            <input type="submit" value="Submit" class="rounded form-button">
+            <input type="button" onclick="off()" value="Cancel" class="rounded form-button">
           </form>
         </div>
 
@@ -88,7 +88,7 @@ limitations under the License.
 
 			<div class="padded rounded panel">
     		<form id="message-form"action="/messages" method="POST" enctype="multipart/form-data" class="hidden">
-      		<h3>Enter a new message:</h3>
+      		<h3>Enter a new review:</h3>
     			<br/>
       		<textarea name="message" id="message-input" class="rounded"></textarea>
 					<p>Upload an image:</p>

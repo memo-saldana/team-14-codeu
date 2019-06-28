@@ -75,19 +75,22 @@ h2 {
 
 input[type=submit] {
   background-color: #FF7F50;
-  height: 50px;
-  width: 100px;
-  font-size: 14pt;
-	color: white;
 }
 
 input[type=button] {
   background-color: grey;
+}
+
+#form .form-button {
   height: 50px;
   width: 100px;
   font-size: 14pt;
 	color: white;
+  float:right;
+  margin-right:20px;
+  display: inline-block
 }
+
 
 #content {
   max-width: 600px;
