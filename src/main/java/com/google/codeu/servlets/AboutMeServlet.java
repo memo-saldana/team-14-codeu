@@ -16,10 +16,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.nodes.Document.OutputSettings;
 
-import com.vladsch.flexmark.util.ast.Node;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
-
 /**
  * Responds with a hard-coded message for testing purposes.
  */
@@ -49,10 +45,29 @@ public class AboutMeServlet extends HttpServlet{
     }
     User userData = datastore.getUser(user);
 
-    if(userData == null || userData.getAboutMe() == null) {
+    String aboutMe = userData.getAboutMe();
+    String username = userData.getName();
+    String country = userData.getCountry();
+    String city = userData.getCity();
+    String recommendation = userData.getRecommendation();
+
+    aboutMe = aboutMe.replace("\n","<br>");
+    recommendation = recommendation.replace("\n","<br>");
+
+    if(userData == null || aboutMe == null || username == null || country == null || city == null || recommendation == null) {
       return;
     }
-    response.getOutputStream().println(userData.getAboutMe());
+    response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>Name</h3>");
+    response.getOutputStream().println("<p>"+ username + "</p>");
+
+    response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>From</h3>");
+    response.getOutputStream().println("<p>" + city + ", " + country + "</p>");
+
+    response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>About me</h3>");
+    response.getOutputStream().println("<p>" + aboutMe + "</p>");
+
+    response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>My recommendation</h3>");
+    response.getOutputStream().println("<p>" + recommendation + "</p>");
   }
 
   @Override
@@ -64,15 +79,14 @@ public class AboutMeServlet extends HttpServlet{
     }
 
     String userEmail = userService.getCurrentUser().getEmail();
+    String firstName = Jsoup.clean(request.getParameter("firstname"), Whitelist.none());
+    String lastName = Jsoup.clean(request.getParameter("lastname"), Whitelist.none());
+    String country = Jsoup.clean(request.getParameter("country"), Whitelist.none());
+    String city = Jsoup.clean(request.getParameter("city"), Whitelist.none());
     String aboutMe = Jsoup.clean(request.getParameter("about-me"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+    String recommendation = Jsoup.clean(request.getParameter("recommendation"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
-    // Process markdown
-    Parser parser = Parser.builder().build();
-    Node document = parser.parse(aboutMe);
-    HtmlRenderer renderer = HtmlRenderer.builder().build();
-    aboutMe = renderer.render(document);
-
-    User user = new User(userEmail, aboutMe);
+    User user = new User(userEmail, firstName, lastName, country, city, aboutMe, recommendation);
     datastore.storeUser(user);
 
     response.sendRedirect("/user-page.html?user="+userEmail);
