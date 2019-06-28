@@ -1,22 +1,26 @@
-let editMarker;
-let map;
-let displayMarkers = {};
- /**
+let editMarker,
+    map,
+    displayMarkers = {},
+    currentImage,
+    currentActiveInfoWindow;
+
+/**
  * Adds a new marker with a toggable info window
  * @param {Number} lat 
  * @param {Number} lng 
  * @param {String} description 
  */
-function addDisplayMarker(lat, lng, description){
+function addDisplayMarker(lat, lng, title, image){
   const marker = new google.maps.Marker({
     position: { lat: lat, lng: lng },
     map: map
   })
   const infoWindow = new google.maps.InfoWindow({
-    content: buildDeletableMarker( lat, lng, description)
+    content: buildDeletableMarker( lat, lng, title)
   })
+  console.log('infoWindow1 :', infoWindow);
   marker.addListener('click', () => {
-    infoWindow.open(map, marker)
+    showLandmark(image, infoWindow, marker);
   })
 
   // Uses a dictionary with both lat and lng for faster lookup
@@ -24,6 +28,7 @@ function addDisplayMarker(lat, lng, description){
     displayMarkers[lat] = {};
   } 
   displayMarkers[lat][lng] = marker;
+  return { infoWindow, marker };
 }
 
 /**
@@ -37,7 +42,6 @@ function createMap(){
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   })
-
   fetchMarkers();
 }
 
@@ -47,7 +51,7 @@ function fetchMarkers(){
   .then((response) => response.json())
   .then((markers) => {
     markers.forEach((marker) => {
-     addDisplayMarker(marker.lat, marker.lng, marker.content)
+     addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark)
     });
   });
 }
@@ -55,15 +59,14 @@ function fetchMarkers(){
 /** Creates a marker that shows a textbox the user can edit. */
 function createMarkerForEdit(lat, lng){
   // If we're already showing an editable marker, then remove it.
-  if(editMarker){
-   editMarker.setMap(null);
-  }
+  closeOtherDialogs();
+
   editMarker = new google.maps.Marker({
     position: {lat: lat, lng: lng},
     map: map
   });
   const infoWindow = new google.maps.InfoWindow({
-    content: buildInfoWindowInput(lat,lng)
+    content: buildInfoWindowInput()
   });
   // When the user closes the editable info window, remove the marker.
   google.maps.event.addListener(infoWindow, 'closeclick', () => {
@@ -73,32 +76,58 @@ function createMarkerForEdit(lat, lng){
  }
 
 /** Builds and returns HTML elements that show an editable textbox and a submit button. */
-function buildInfoWindowInput(lat, lng){
-  const textBox = document.createElement('textarea');
-  const button = document.createElement('button');
-  button.appendChild(document.createTextNode('Submit'));
-  button.onclick = () => {
-    postMarker(lat, lng, textBox.value);
-    addDisplayMarker(lat, lng, textBox.value);
-    editMarker.setMap(null);
-  };
+function buildInfoWindowInput(){
+  
+  const markerForm = document.getElementById('marker-form').cloneNode(true);
   const containerDiv = document.createElement('div');
-  containerDiv.appendChild(textBox);
-  containerDiv.appendChild(document.createElement('br'));
-  containerDiv.appendChild(button);
+  containerDiv.appendChild(markerForm);
+  markerForm.classList.remove('hidden');
   return containerDiv;
 }
 
+
 /** Sends a marker to the backend for saving. */
-function postMarker(lat, lng, content){
-  const params = new URLSearchParams();
-  params.append('lat', lat);
-  params.append('lng', lng);
-  params.append('content', content);
-  fetch('/markers', {
-    method: 'POST',
-    body: params
-  });
+function postMarker(ev){
+  // Don't let form be submitted
+  ev.preventDefault();
+  // Get all info from marker and form
+  const lat = editMarker.getPosition().lat();
+  const lng = editMarker.getPosition().lng();
+  const content = document.getElementById('title-input').value;
+  const landmark = document.getElementById('landmark-input').files[0];
+  // Get blobstore upload url
+  fetch('/markers/uploadURL')
+  .then(response => response.text())
+  .then(uploadURL => {
+
+    const h = new Headers();
+    h.append('Accept', 'application/json');
+    const fd = new FormData();
+    fd.append('lat', lat);
+    fd.append('lng', lng);
+    fd.append('content', content);
+    fd.append('landmark',landmark);
+  
+    // Create request to upload url
+    const req = new Request(uploadURL,{
+      method: 'POST',
+      headers: h,
+      body: fd
+    })
+
+    return fetch(req)
+  })
+  .then( response => response.json())
+  .then(marker => {
+
+    // Create display marker for this newly created landmark
+    editMarker.setMap(null);
+    const {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
+    showLandmark(marker.landmark, infoWindow, mapMarker);
+    infoWindow.open(map, mapMarker);
+  })
+  // Future integrations: Create dialog box with errors
+  .catch(err => console.log(err))
 }
 
 function buildDeletableMarker(lat, lng, content){ 
@@ -131,7 +160,36 @@ function removeMarker(lat, lng, content){
     // Finds marker after being deleted from datastore,
     //  removes it from map, then from dictionary
     displayMarkers[lat][lng].setMap(null);
+    currentImage.parentNode.removeChild(currentImage);
+    currentImage = null;
     delete displayMarkers[lat][lng];
   })
   .catch(error => console.log(error));
+}
+
+function closeOtherDialogs(){
+  if(editMarker){
+    editMarker.setMap(null);
+  }
+  if(currentActiveInfoWindow){
+    currentActiveInfoWindow.close();
+  }
+}
+
+function showLandmark(image, infoWindow, marker){
+  closeOtherDialogs();
+  console.log('infoWindow :', infoWindow);
+  if(currentImage){
+    // If there is a previous image displayed, remove it
+    currentImage.src = image;
+    
+  } else {
+    // Show current image'
+    let div = document.getElementById('landmark-div');
+    currentImage = document.createElement('img')
+    currentImage.src = image;
+    div.appendChild(currentImage);
+  }
+  infoWindow.open(map, marker);
+  currentActiveInfoWindow = infoWindow;
 }

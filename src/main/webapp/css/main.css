@@ -57,6 +57,10 @@ h1 {
   border: thin solid black;
 }
 
+.hidden {
+  display: none;
+}
+
 .panel {
 	background-color: white;
 	margin-top: 20px;
