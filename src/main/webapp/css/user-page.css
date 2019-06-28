@@ -81,6 +81,14 @@ input[type=submit] {
 	color: white;
 }
 
+input[type=button] {
+  background-color: grey;
+  height: 50px;
+  width: 100px;
+  font-size: 14pt;
+	color: white;
+}
+
 #content {
   max-width: 600px;
   margin-left: auto;
