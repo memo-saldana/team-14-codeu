@@ -49,7 +49,6 @@ public class MarkerServlet extends HttpServlet {
   /** Accepts a POST request containing a new marker. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.println("POST ROUTE");
 
     String latStr = request.getParameter("lat");
     String lngStr = request.getParameter("lng");
@@ -117,6 +116,9 @@ public class MarkerServlet extends HttpServlet {
   private String getFileUrl(HttpServletRequest request, String formInputElementName) {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    if(!blobs.containsKey(formInputElementName)){
+      return null;
+    }
     List<BlobKey> blobKeys = blobs.get(formInputElementName);
 
     // User submitted form without selecting a file, so we can't get a URL. (devserver)

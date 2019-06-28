@@ -42,7 +42,6 @@ function createMap(){
   map.addListener('click', (event) => {
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   })
-  // document.getElementById('btnSubmit').addEventListener('click',postMarker)
   fetchMarkers();
 }
 
@@ -51,7 +50,6 @@ function fetchMarkers(){
   fetch('/markers')
   .then((response) => response.json())
   .then((markers) => {
-    console.log('markers :', markers);
     markers.forEach((marker) => {
      addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark)
     });
@@ -93,25 +91,25 @@ function postMarker(ev){
   // Don't let form be submitted
   ev.preventDefault();
   // Get all info from marker and form
-  let lat = editMarker.getPosition().lat();
-  let lng = editMarker.getPosition().lng();
-  let content = document.getElementById('title-input').value;
-  let landmark = document.getElementById('landmark-input').files[0];
+  const lat = editMarker.getPosition().lat();
+  const lng = editMarker.getPosition().lng();
+  const content = document.getElementById('title-input').value;
+  const landmark = document.getElementById('landmark-input').files[0];
   // Get blobstore upload url
   fetch('/markers/uploadURL')
   .then(response => response.text())
   .then(uploadURL => {
 
-    let h = new Headers();
+    const h = new Headers();
     h.append('Accept', 'application/json');
-    let fd = new FormData();
+    const fd = new FormData();
     fd.append('lat', lat);
     fd.append('lng', lng);
     fd.append('content', content);
     fd.append('landmark',landmark);
   
     // Create request to upload url
-    let req = new Request(uploadURL,{
+    const req = new Request(uploadURL,{
       method: 'POST',
       headers: h,
       body: fd
@@ -124,7 +122,7 @@ function postMarker(ev){
 
     // Create display marker for this newly created landmark
     editMarker.setMap(null);
-    let {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
+    const {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
     showLandmark(marker.landmark, infoWindow, mapMarker);
     infoWindow.open(map, mapMarker);
   })
