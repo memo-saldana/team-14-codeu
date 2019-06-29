@@ -97,21 +97,21 @@ h1 {
 #map {
   width: 450px;
   height: 525px;
-	margin-right: 2%;
-	float: left;
+  margin-right: 2%;
+  float: left;
   border: thin solid black;
 }
 
 #map iframe {
-	width:100%;
+  width:100%;
 }
 
 #landmark-div {
-	max-width: 25%;
-	margin-right: 2%;
-	float: left;
+  max-width: 25%;
+  margin-right: 2%;
+  float: left;
 }
 
 .clearfix {
-	clear:both;
+  clear:both;
 }
