@@ -117,13 +117,18 @@ public class Datastore {
 		}
 		return users;
 	}
-  
+
   /**Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail() );
     userEntity.setProperty("email", user.getEmail() );
+    userEntity.setProperty("firstName", user.getFirstName() );
+    userEntity.setProperty("lastName", user.getLastName() );
+    userEntity.setProperty("country", user.getCountry() );
+    userEntity.setProperty("city", user.getCity() );
     userEntity.setProperty("aboutMe", user.getAboutMe() );
-    
+    userEntity.setProperty("recommendation", user.getRecommendation() );
+
     datastore.put(userEntity);
   }
 
@@ -140,10 +145,15 @@ public class Datastore {
     if(userEntity == null) {
       return null;
     }
-    
+
+    String firstName = (String) userEntity.getProperty("firstName");
+    String lastName = (String) userEntity.getProperty("lastName");
+    String country = (String) userEntity.getProperty("country");
+    String city = (String) userEntity.getProperty("city");
     String aboutMe = (String) userEntity.getProperty("aboutMe");
-    User user = new User(email, aboutMe);
-    
+    String recommendation = (String) userEntity.getProperty("recommendation");
+    User user = new User(email, firstName, lastName, country, city, aboutMe, recommendation);
+
     return user;
   }
 
@@ -181,14 +191,14 @@ public class Datastore {
         new Query.FilterPredicate("content", FilterOperator.EQUAL, marker.getContent())));
     PreparedQuery results = datastore.prepare(query);
     Entity markerEntity = results.asSingleEntity();
-    
+
     // if not found, return null
     if(markerEntity == null) {
       return null;
     }
-    
+
     datastore.delete(markerEntity.getKey());
-    
+
     Marker deletedMarker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),(String) markerEntity.getProperty("content") );
     return deletedMarker;
   }

@@ -75,11 +75,22 @@ h2 {
 
 input[type=submit] {
   background-color: #FF7F50;
+}
+
+input[type=button] {
+  background-color: grey;
+}
+
+#form .form-button {
   height: 50px;
   width: 100px;
   font-size: 14pt;
 	color: white;
+  float:right;
+  margin-right:20px;
+  display: inline-block
 }
+
 
 #content {
   max-width: 600px;
@@ -95,4 +106,71 @@ input[type=submit] {
 
 #page-title {
 	color: #f88379;
+}
+
+.about-me h2{
+  display: inline-block;
+}
+
+.about-me button {
+  display: inline-block;
+  float: right;
+  background-color: #FF7F50;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#form {
+  width:50%;
+  height:600px;
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+#form .form-group {
+  margin: 20px;
+}
+
+#form .header {
+  border-bottom: 1px solid white;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: #FF7F50;
+  color: white;
+  height: 50px;
+  line-height: 50px;
+}
+
+#form .header p{
+  display: inline-block;
+  padding-left: 20px;
+  color: white;
+}
+
+#form .header .close {
+  display: inline-block;
+  padding-right: 10px;
+  padding-top: 10px;
 }
