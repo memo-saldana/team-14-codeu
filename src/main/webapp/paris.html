@@ -5,9 +5,8 @@
   <title>Paris</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/translation.css">
-
+ 	<link rel="stylesheet" href="/css/main.css">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTKCvhH556SBJtCN0MbZuOIPJX5rjYhgY"></script>
   <script src="/js/map-loader.js"></script>
   <script src="/js/review-loader.js"></script>
@@ -46,11 +45,11 @@
 
   <div class="container">
     <h1>Popular Landmarks!</h1>
-    <div id="map"></div>
-    <p>CLick on a landmark to see pictures of it!</p>
-    <div id="landmark-div"></div>
+    <p>Click on a landmark to see pictures of it!</p>
+		<div id="map"><iframe></iframe></div>
+		<div id="landmark-div"></div>
     <form id="marker-form"  class="hidden">
-      <h2>Landmark:</h2>
+    	<h2>Landmark:</h2>
       <p>Title:</p>
       <textarea name="title" id="title-input" class="rounded"></textarea>
       <p>Upload an image:</p>
@@ -58,9 +57,10 @@
       <br/><br/>
       <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
     </form>
+		<div class="clearfix"></div>
   </div>
 
-  <br>
+  <br><br>
 
   <div class = "container">
     <h1>Translation</h1>

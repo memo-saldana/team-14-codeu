@@ -36,7 +36,7 @@ function addDisplayMarker(lat, lng, title, image){
  */
 function createMap(){
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 37.764419, lng: -122.445911},
+    center: {lat: 48.8566, lng: 2.3522},
     zoom: 12
   });
   map.addListener('click', (event) => {
