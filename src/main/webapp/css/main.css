@@ -51,12 +51,6 @@ h1 {
  color: #f88379;
 }
 
-#map {
-  width: 500px;
-  height: 500px;
-  border: thin solid black;
-}
-
 .hidden {
   display: none;
 }
@@ -98,4 +92,26 @@ h1 {
 	color: white;
 	font-size: 10pt;
 	text-align: right;
+}
+
+#map {
+  width: 450px;
+  height: 525px;
+  margin-right: 2%;
+  float: left;
+  border: thin solid black;
+}
+
+#map iframe {
+  width:100%;
+}
+
+#landmark-div {
+  max-width: 25%;
+  margin-right: 2%;
+  float: left;
+}
+
+.clearfix {
+  clear:both;
 }
