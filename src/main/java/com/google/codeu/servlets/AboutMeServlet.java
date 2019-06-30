@@ -45,8 +45,13 @@ public class AboutMeServlet extends HttpServlet{
     }
     User userData = datastore.getUser(user);
 
+    if(userData == null || userData.getAboutMe() == null || userData.getFirstName() == null || userData.getLastName() == null || userData.getCountry() == null || userData.getCity() == null || userData.getRecommendation() == null) {
+      return;
+    }
+
     String aboutMe = userData.getAboutMe();
-    String username = userData.getName();
+    String firstName = userData.getFirstName();
+    String lastName = userData.getLastName();
     String country = userData.getCountry();
     String city = userData.getCity();
     String recommendation = userData.getRecommendation();
@@ -54,11 +59,8 @@ public class AboutMeServlet extends HttpServlet{
     aboutMe = aboutMe.replace("\n","<br>");
     recommendation = recommendation.replace("\n","<br>");
 
-    if(userData == null || aboutMe == null || username == null || country == null || city == null || recommendation == null) {
-      return;
-    }
     response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>Name</h3>");
-    response.getOutputStream().println("<p>"+ username + "</p>");
+    response.getOutputStream().println("<p>"+ firstName + " " + lastName + "</p>");
 
     response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>From</h3>");
     response.getOutputStream().println("<p>" + city + ", " + country + "</p>");
