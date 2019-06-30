@@ -41,7 +41,7 @@
 .message-body {
   margin: 5px;
   word-wrap: break-word;
-  white-space: pre;
+  white-space: normal;
 }
 
 /* Restrict image size */
