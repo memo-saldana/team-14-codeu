@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Paris</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/translation.css">
+ 	<link rel="stylesheet" href="/css/main.css">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTKCvhH556SBJtCN0MbZuOIPJX5rjYhgY"></script>
+  <script src="/js/map-loader.js"></script>
+  <script src="/js/review-loader.js"></script>
+  <script src="/js/translation-loader.js"></script>
+
+</head>
+<body onload="createMap(); buildUI()">
+  <nav>
+    <ul id="navigation">
+      <li><a href="/">Home</a></li>
+      <li><a href="/aboutus.html">About Our Team</a></li>
+    </ul>
+  </nav>
+  <div class="py-5 text-center">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-md-8" >
+          <h1 class="mb-1" style="font-family: 'Pinyon Script', cursive; font-size:80px">Venice</h1>
+          <p class="lead text-muted" style="font-size:15px">“A walk about Paris will provide lessons in history, beauty, and in the point of Life.” – Thomas Jefferson</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-5" >
+    <div class="container">
+      <div class="row">
+        <div class=col-md-12>
+          <div class="card" id="reviews-container">
+            <div class="card-header">Reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Popular Landmarks!</h1>
+    <p>Click on a landmark to see pictures of it!</p>
+		<div id="map"><iframe></iframe></div>
+		<div id="landmark-div"></div>
+    <form id="marker-form"  class="hidden">
+    	<h2>Landmark:</h2>
+      <p>Title:</p>
+      <textarea name="title" id="title-input" class="rounded"></textarea>
+      <p>Upload an image:</p>
+      <input type="file" name="landmark" id="landmark-input">
+      <br/><br/>
+      <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
+    </form>
+		<div class="clearfix"></div>
+  </div>
+
+  <br><br>
+
+  <div class = "container">
+    <h1>Translation</h1>
+    <p>Type a message and select a language, then click submit to translate it.</p>
+
+    <textarea id="text"></textarea>
+
+    <select id="language">
+      <option value="ar">Arabic</option>
+      <option value="de">German</option>
+      <option value="en">English</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <option value="hi">Hindi</option>
+      <option value="it">Itanlian</option>
+      <option value="ja">Japanese</option>
+      <option value="ko">Korean</option>
+      <option value="vi">Vietnamese</option>
+      <option value="zh">Chinese</option>
+    </select>
+
+    <button onclick="requestTranslation();">Translate</button>
+
+    <hr/>
+    <div id="result"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
