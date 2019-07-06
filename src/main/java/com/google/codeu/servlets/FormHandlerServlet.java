@@ -28,7 +28,7 @@ import com.google.codeu.servlets.MarkdownProcessor;
 
 @WebServlet("/my-form-handler")
 public class FormHandlerServlet extends HttpServlet {
-  
+
 	private Datastore datastore;
 
   @Override
@@ -54,8 +54,9 @@ public class FormHandlerServlet extends HttpServlet {
 
     String user = userService.getCurrentUser().getEmail();
     String mess = MarkdownProcessor.processMarkdown(text);
+    String city = request.getParameter("city");
 
-    Message message = new Message(user, mess, imageUrl);
+    Message message = new Message(user, mess, city, imageUrl);
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
@@ -91,5 +92,5 @@ public class FormHandlerServlet extends HttpServlet {
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
     return imagesService.getServingUrl(options);
-  } 
+  }
 }

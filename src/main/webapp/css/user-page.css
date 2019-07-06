@@ -52,6 +52,10 @@
 	font: 12pt cursive;
 }
 
+#message-form select {
+  margin-bottom: 25px;
+}
+
 /* Use this to hide certain elements like forms if the
    user is not logged in or viewing their own page. */
 .hidden {
