@@ -32,61 +32,133 @@
     </div>
   </div>
 
-  <div class="py-5" >
-    <div class="container">
-      <div class="row">
-        <div class=col-md-12>
-          <div class="card" id="reviews-container">
-            <div class="card-header">Reviews</div>
+  <div class="leftcolumn">
+    <div class="py-5" >
+      <div class="container">
+        <div class="row">
+          <div class=col-md-12>
+            <div class="card" id="reviews-container">
+              <div class="card-header coral">Reviews</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="container">
+      <h1>Popular Landmarks!</h1>
+      <p>Click on a landmark to see pictures of it!</p>
+  		<div id="map"><iframe></iframe></div>
+  		<div id="landmark-div"></div>
+      <form id="marker-form"  class="hidden">
+      	<h2>Landmark:</h2>
+        <p>Title:</p>
+        <textarea name="title" id="title-input" class="rounded"></textarea>
+        <p>Upload an image:</p>
+        <input type="file" name="landmark" id="landmark-input">
+        <br/><br/>
+        <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
+      </form>
+  		<div class="clearfix"></div>
+    </div>
+
+    <br><br>
+
+    <div class = "container">
+      <h1>Translation</h1>
+      <p>Type a message and select a language, then click submit to translate it.</p>
+
+      <textarea id="text"></textarea>
+
+      <select id="language">
+        <option value="ar">Arabic</option>
+        <option value="de">German</option>
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="hi">Hindi</option>
+        <option value="it">Itanlian</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="vi">Vietnamese</option>
+        <option value="zh">Chinese</option>
+      </select>
+
+      <button onclick="requestTranslation();">Translate</button>
+
+      <hr/>
+      <div id="result"></div>
+    </div>
   </div>
 
-  <div class="container">
-    <h1>Popular Landmarks!</h1>
-    <p>Click on a landmark to see pictures of it!</p>
-		<div id="map"><iframe></iframe></div>
-		<div id="landmark-div"></div>
-    <form id="marker-form"  class="hidden">
-    	<h2>Landmark:</h2>
-      <p>Title:</p>
-      <textarea name="title" id="title-input" class="rounded"></textarea>
-      <p>Upload an image:</p>
-      <input type="file" name="landmark" id="landmark-input">
-      <br/><br/>
-      <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
-    </form>
-		<div class="clearfix"></div>
-  </div>
+  <div class="rightcolumn">
+    <div class="py-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header coral">Basic French Words</div>
+          <div class="card-body">
+            <p>Hello: Bonjour</p>
+            <p>Goodbye: Au revoir!</p>
+            <p>Please: S'il vous plaît; s'il te plaît</p>
+            <p>Thank you: Merci</p>
+            <p> You're welcome: De rien</p>
+            <p>Yes: Oui</p>
+            <p>No: Non</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <br><br>
+    <div class="pb-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header coral">Common French Phrases</div>
+          <div class="card-body">
+            <p>How are you?: Comment vas-tu?</p>
+            <p>I don’t understand: Je ne comprends pas</p>
+            <p>Can you help me?: Pourriez-vous m’aider?</p>
+            <p>Excuse me: Excusez-moi</p>
+            <p>Excuse me (passing through a crowd): Pardon</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class = "container">
-    <h1>Translation</h1>
-    <p>Type a message and select a language, then click submit to translate it.</p>
+    <div class="pb-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header coral">Useful French words for travelers</div>
+          <div class="card-body">
+            <p>Airport: Aéroport</p>
+            <p>Train station: Gare</p>
+            <p>Train: Train</p>
+            <p>Bus: Autobus</p>
+            <p>Stop (bus): L’arrêt de bus</p>
+            <p>Car: Voiture</p>
+            <p>Luggage: Bagage</p>
+            <p>Restaurant: Restaurant</p>
+            <p>ATM: AU M</p>
+            <p>Help: Aidez-moi</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <textarea id="text"></textarea>
-
-    <select id="language">
-      <option value="ar">Arabic</option>
-      <option value="de">German</option>
-      <option value="en">English</option>
-      <option value="es">Spanish</option>
-      <option value="fr">French</option>
-      <option value="hi">Hindi</option>
-      <option value="it">Itanlian</option>
-      <option value="ja">Japanese</option>
-      <option value="ko">Korean</option>
-      <option value="vi">Vietnamese</option>
-      <option value="zh">Chinese</option>
-    </select>
-
-    <button onclick="requestTranslation();">Translate</button>
-
-    <hr/>
-    <div id="result"></div>
+    <div class="pb-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header coral">Useful French sayings for travelers</div>
+          <div class="card-body">
+            <p>Where are the toilets?: Où sont les toilettes?</p>
+            <p>Do you speak English?: Parlez-vous anglais?</p>
+            <p>I don’t speak French: Je ne parle pas français</p>
+            <p>How much is it?: C'est combien?</p>
+            <p>Check, please: L’addition, s’il vous plaît.</p>
+            <p>I’m lost: Je suis perdu</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
