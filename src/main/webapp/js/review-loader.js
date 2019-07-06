@@ -1,12 +1,17 @@
 // Fetch messages and add them to the page.
-function fetchMessages(){
+function fetchMessages(city){
   const url = '/feed';
-  fetch(url).then((response) => {
-    return response.json();
-  }).then((messages) => {
+  let header = new Headers();
+  header.append('city', city);
+
+  fetch(url, {
+    method: 'GET',
+    headers: header
+  }).then(response => response.json())
+  .then((messages) => {
     const reviewsContainer = document.getElementById('reviews-container');
     if(messages.length == 0){
-     reviewsContainer.innerHTML = '<p>There are no posts yet.</p>';
+     reviewsContainer.innerHTML = '<p>There are no reviews yet.</p>';
     }
     messages.forEach((message) => {
      const reviewDiv = buildMessageDiv(message);
@@ -37,6 +42,6 @@ function buildMessageDiv(message){
 }
 
 // Fetch data and populate the UI of the page.
-function buildUI(){
- fetchMessages();
+function buildUI(city){
+ fetchMessages(city);
 }
