@@ -32,9 +32,9 @@ function addDisplayMarker(lat, lng, title, image){
 }
 
 /**
- * Main function
+ * Paris main function
  */
-function createMap(){
+function createParisMap(){
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 48.8566, lng: 2.3522},
     zoom: 12
@@ -43,6 +43,34 @@ function createMap(){
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   })
   fetchMarkers();
+}
+
+/**
+* Amsterdam main function
+*/
+function createAmsterdamMap(){
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: 52.3680, lng: 4.9036},
+		zoom: 12
+	});
+	map.addListener('click', (event) => {
+	createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+	})
+	fetchMarkers();
+}
+
+/**
+* Venice main function
+*/
+function createVeniceMap(){
+	map = new google.maps.Map(document.getElementById('map'), {
+	center: {lat: 45.4408, lng: 12.3155},
+	zoom: 12
+	});
+	map.addListener('click', (event) => {
+	createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+	})
+	fetchMarkers();
 }
 
  /** Fetches markers from the backend and adds them to the map. */
