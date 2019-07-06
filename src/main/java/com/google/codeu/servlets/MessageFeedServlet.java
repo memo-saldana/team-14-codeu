@@ -43,7 +43,7 @@ public class MessageFeedServlet extends HttpServlet{
 
 		String city = request.getHeader("city");
 
-		List<Message> messages = datastore.getMessagesForCity(city);
+		List<Message> messages = datastore.getReviewsForCity(city);
 		Gson gson = new Gson();
 		String json = gson.toJson(messages);
 

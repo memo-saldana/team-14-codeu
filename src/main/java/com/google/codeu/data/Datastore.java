@@ -41,13 +41,13 @@ public class Datastore {
 
 	/** Stores the Message in Datastore. */
 	public void storeMessage(Message message) {
-		Entity messageEntity = new Entity("Message", message.getId().toString());
-		messageEntity.setProperty("user", message.getUser());
-		messageEntity.setProperty("text", message.getText());
+    Entity messageEntity = new Entity("Message", message.getId().toString());
+    messageEntity.setProperty("user", message.getUser());
+    messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("city", message.getCity());
-		messageEntity.setProperty("timestamp", message.getTimestamp());
-		messageEntity.setProperty("imageUrl", message.getImageUrl());
-		datastore.put(messageEntity);
+    messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("imageUrl", message.getImageUrl());
+    datastore.put(messageEntity);
 	}
 
   /**
@@ -102,7 +102,7 @@ public class Datastore {
    * @return a list of messages posted for a city, or empty list if there is no review for that city.
    * List is sorted by time descending.
    */
-  public List<Message> getMessagesForCity(String city) {
+  public List<Message> getReviewsForCity(String city) {
     Query query =
       new Query("Message")
         .setFilter(new Query.FilterPredicate("city", FilterOperator.EQUAL, city))

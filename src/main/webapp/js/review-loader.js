@@ -11,7 +11,7 @@ function fetchMessages(city){
   .then((messages) => {
     const reviewsContainer = document.getElementById('reviews-container');
     if(messages.length == 0){
-     reviewsContainer.innerHTML = '<p>There are no posts yet.</p>';
+     reviewsContainer.innerHTML = '<p>There are no reviews yet.</p>';
     }
     messages.forEach((message) => {
      const reviewDiv = buildMessageDiv(message);
