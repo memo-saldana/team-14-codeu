@@ -44,6 +44,7 @@ public class Datastore {
 		Entity messageEntity = new Entity("Message", message.getId().toString());
 		messageEntity.setProperty("user", message.getUser());
 		messageEntity.setProperty("text", message.getText());
+    messageEntity.setProperty("city", message.getCity());
 		messageEntity.setProperty("timestamp", message.getTimestamp());
 		messageEntity.setProperty("imageUrl", message.getImageUrl());
 		datastore.put(messageEntity);
@@ -64,10 +65,11 @@ public class Datastore {
         UUID id = UUID.fromString(idString);
         String user = (String) entity.getProperty("user");
         String text = (String) entity.getProperty("text");
+        String city = (String) entity.getProperty("city");
 				String imageUrl = (String)entity.getProperty("imageUrl");
         long timestamp = (long) entity.getProperty("timestamp");
 
-				Message message = new Message(id, user, text, imageUrl, timestamp);
+				Message message = new Message(id, user, text, city, imageUrl, timestamp);
 					messages.add(message);
 			} catch (Exception e) {
 				System.err.println("Error reading message.");
@@ -89,6 +91,21 @@ public class Datastore {
     Query query =
     	new Query("Message")
       	.setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+        .addSort("timestamp", SortDirection.DESCENDING);
+
+    return processQuery(query);
+  }
+
+  /**
+   * Gets reviews posted for a specific city.
+   *
+   * @return a list of messages posted for a city, or empty list if there is no review for that city.
+   * List is sorted by time descending.
+   */
+  public List<Message> getMessagesForCity(String city) {
+    Query query =
+      new Query("Message")
+        .setFilter(new Query.FilterPredicate("city", FilterOperator.EQUAL, city))
         .addSort("timestamp", SortDirection.DESCENDING);
 
     return processQuery(query);

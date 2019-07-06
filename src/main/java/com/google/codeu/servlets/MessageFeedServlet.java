@@ -41,7 +41,9 @@ public class MessageFeedServlet extends HttpServlet{
 
 		response.setContentType("application/json");
 
-		List<Message> messages = datastore.getAllMessages();
+		String city = request.getHeader("city");
+
+		List<Message> messages = datastore.getMessagesForCity(city);
 		Gson gson = new Gson();
 		String json = gson.toJson(messages);
 
@@ -58,10 +60,12 @@ public class MessageFeedServlet extends HttpServlet{
 		}
 
     String userEmail = userService.getCurrentUser().getEmail();
-    String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+    String text = Jsoup.clean(request.getParameter("message"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
     String mess = MarkdownProcessor.processMarkdown(text);
 
-		Message message = new Message(userEmail, mess);
+		String city = request.getParameter("city");
+
+		Message message = new Message(userEmail, mess, city);
 		datastore.storeMessage(message);
 
 		response.sendRedirect("/feed.html");
