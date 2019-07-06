@@ -88,6 +88,14 @@ limitations under the License.
     		<form id="message-form"action="/messages" method="POST" enctype="multipart/form-data" class="hidden">
       		<h3>Enter a new review:</h3>
     			<br/>
+          <select name="city">
+            <option value="">For which city?</option>
+            <option value="amsterdam">Amsterdam</option>
+            <option value="paris">Paris</option>
+            <option value="venice">Venice</option>
+          </select>
+
+          <br/>
       		<textarea name="message" id="message-input" class="rounded"></textarea>
 					<p>Upload an image:</p>
       		<input type="file" name="image">
