@@ -11,13 +11,14 @@
   <script src="/js/map-loader.js"></script>
   <script src="/js/review-loader.js"></script>
   <script src="/js/translation-loader.js"></script>
-
+	<script src="/js/navigation-loader.js"></script>
 </head>
-<body onload="createMap(); buildUI('paris')">
+<body onload="addLoginOrLogoutLinkToNavigation(); createMap(48.8566, 2.3522); buildUI('paris')">
   <nav>
     <ul id="navigation">
       <li><a href="/">Home</a></li>
-      <li><a href="/aboutus.html">About Our Team</a></li>
+      <li><a href="/amsterdam.html">Amsterdam</a></li>
+			<li><a href="/venice.html">Venice</a><li>
     </ul>
   </nav>
   <div class="py-5 text-center">

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Paris</title>
+  <title>Amsterdam</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/translation.css">
@@ -11,13 +11,15 @@
   <script src="/js/map-loader.js"></script>
   <script src="/js/review-loader.js"></script>
   <script src="/js/translation-loader.js"></script>
+	<script src="/js/navigation-loader.js"></script>
 
 </head>
-<body onload="createMap(); buildUI('amsterdam')">
+<body onload="addLoginOrLogoutLinkToNavigation(); createMap(52.3680, 4.9036); buildUI('amsterdam')">
   <nav>
     <ul id="navigation">
       <li><a href="/">Home</a></li>
-      <li><a href="/aboutus.html">About Our Team</a></li>
+      <li><a href="/paris.html">Paris</a></li>
+			<li><a href="venice.html">Venice</a><li>
     </ul>
   </nav>
   <div class="py-5 text-center">
@@ -25,7 +27,7 @@
       <div class="row">
         <div class="mx-auto col-md-8" >
           <h1 class="mb-1" style="font-family: 'Pinyon Script', cursive; font-size:80px">Amsterdam</h1>
-          <p class="lead text-muted" style="font-size:15px">“A walk about Paris will provide lessons in history, beauty, and in the point of Life.” – Thomas Jefferson</p>
+          <p class="lead text-muted" style="font-size:15px">“Some tourists think Amsterdam is a city of sin, but in truth it is a city of freedom. And in freedom, most people find sin.” – John Green</p>
         </div>
       </div>
     </div>
