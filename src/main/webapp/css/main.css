@@ -17,12 +17,16 @@
 /* Prevent the page from becoming too wide. */
 body {
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  width:100%
 }
 
 nav {
   background-color: #FF7F50;
  	font-size: 12pt;
-  padding: 5px;
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  padding-left: 10px;
 }
 
 nav a {
@@ -39,7 +43,7 @@ nav ul {
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 h1 {
