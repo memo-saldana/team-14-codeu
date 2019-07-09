@@ -33,63 +33,131 @@
     </div>
   </div>
 
-  <div class="py-5" >
+  <div class="leftcolumn">
+    <div class="py-5" >
+      <div class="container">
+        <div class="row">
+          <div class=col-md-12>
+            <div class="card" id="reviews-container">
+              <div class="card-header card-header-color">Reviews</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
-      <div class="row">
-        <div class=col-md-12>
-          <div class="card" id="reviews-container">
-            <div class="card-header">Reviews</div>
+      <h1>Popular Landmarks!</h1>
+      <p>Click on a landmark to see pictures of it!</p>
+  		<div id="map"><iframe></iframe></div>
+  		<div id="landmark-div"></div>
+      <form id="marker-form"  class="hidden">
+      	<h2>Landmark:</h2>
+        <p>Title:</p>
+        <textarea name="title" id="title-input" class="rounded"></textarea>
+        <p>Upload an image:</p>
+        <input type="file" name="landmark" id="landmark-input">
+        <br/><br/>
+        <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
+      </form>
+  		<div class="clearfix"></div>
+    </div>
+
+    <br><br>
+
+    <div class = "container">
+      <h1>Translation</h1>
+      <p>Type a message and select a language, then click submit to translate it.</p>
+
+      <textarea id="text"></textarea>
+
+      <select id="language">
+        <option value="ar">Arabic</option>
+        <option value="de">German</option>
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="hi">Hindi</option>
+        <option value="it">Itanlian</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="vi">Vietnamese</option>
+        <option value="zh">Chinese</option>
+      </select>
+
+      <button onclick="requestTranslation();">Translate</button>
+
+      <hr/>
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <div class="rightcolumn">
+    <div class="py-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header card-header-color">Basic Dutch Words</div>
+          <div class="card-body">
+            <p>Hello: Hallo; Hoi</p>
+            <p>Goodbye: Tot ziens; Doei (informal)</p>
+            <p>Please: Alsjeblieft; Alstublieft</p>
+            <p>Thank you: Dank je; Dank U</p>
+            <p>Yes: Ja</p>
+            <p>No: Nee</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header card-header-color">Common Dutch Phrases</div>
+          <div class="card-body">
+            <p>How are you?: Hoe gaat het met je/U? (informal/formal)</p>
+            <p>I don’t know: Ik weet het niet</p>
+            <p>I’m sorry: Het spijt me	</p>
+            <p>Excuse me: Sorry; Pardon	</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header card-header-color">Useful Dutch words for travelers</div>
+          <div class="card-body">
+            <p>Airport: Vliegveld; luchthaven</p>
+            <p>Train station: Treinstation</p>
+            <p>Train: Treno</p>
+            <p>Bus: Bus</p>
+            <p>Stop (bus): Bushalte</p>
+            <p>Car: Auto</p>
+            <p>Luggage: Bagage</p>
+            <p>Hotel: Hotel</p>
+            <p>ATM: Geldautomaat</p>
+            <p>Help: Help</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-5">
+      <div class="container">
+        <div class="card">
+          <div class="card-header card-header-color">Useful Dutch sayings for travelers</div>
+          <div class="card-body">
+            <p>Where is the bathroom?: Waar is het toilet?</p>
+            <p>Do you speak English?: Spreek je Engels?</p>
+            <p>I don’t speak Dutch: Ik spreek geen Nederlands</p>
+            <p>How much does it cost?: Hoeveel kost het?</p>
+            <p>May I have the check, please?: Mag ik de rekening alstublieft?</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="container">
-    <h1>Popular Landmarks!</h1>
-    <p>Click on a landmark to see pictures of it!</p>
-		<div id="map"><iframe></iframe></div>
-		<div id="landmark-div"></div>
-    <form id="marker-form"  class="hidden">
-    	<h2>Landmark:</h2>
-      <p>Title:</p>
-      <textarea name="title" id="title-input" class="rounded"></textarea>
-      <p>Upload an image:</p>
-      <input type="file" name="landmark" id="landmark-input">
-      <br/><br/>
-      <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
-    </form>
-		<div class="clearfix"></div>
-  </div>
-
-  <br><br>
-
-  <div class = "container">
-    <h1>Translation</h1>
-    <p>Type a message and select a language, then click submit to translate it.</p>
-
-    <textarea id="text"></textarea>
-
-    <select id="language">
-      <option value="ar">Arabic</option>
-      <option value="de">German</option>
-      <option value="en">English</option>
-      <option value="es">Spanish</option>
-      <option value="fr">French</option>
-      <option value="hi">Hindi</option>
-      <option value="it">Itanlian</option>
-      <option value="ja">Japanese</option>
-      <option value="ko">Korean</option>
-      <option value="vi">Vietnamese</option>
-      <option value="zh">Chinese</option>
-    </select>
-
-    <button onclick="requestTranslation();">Translate</button>
-
-    <hr/>
-    <div id="result"></div>
-  </div>
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
