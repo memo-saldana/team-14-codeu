@@ -22,16 +22,16 @@ body {
 
 nav {
   background-color: #FF7F50;
-  font-size: 1.8em;
-  height: 70px;
-  line-height: 70px;
+  font-size: 12pt;
+  height: 40px;
+  line-height: 40px;
   width: 100%;
-  padding-left: 30px;
+  padding-left: 20px;
 }
 
 nav a {
   color: white;
-  margin-right: 25px;
+  margin-right: 20px;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -47,12 +47,7 @@ nav li {
 }
 
 h1 {
-  font-size: 3em;
   color: #f88379;
-}
-
-p {
-  font-size: 1.5em;
 }
 
 .hidden {
@@ -84,14 +79,14 @@ p {
 
 #footer {
   color: #f88379;
-  font-size: 1em;
+  font-size: 10pt;
   text-align: right;
 }
 
 #map {
-  width: 700px;
-  height: 800px;
-  margin-right: 5%;
+  width: 500px;
+  height: 600px;
+  margin-right: 2%;
   float: left;
   border: thin solid black;
 }
@@ -101,8 +96,12 @@ p {
 }
 
 #landmark-div {
-  max-width: 550px;
+  width: 340px;
   float: left;
+}
+
+.container img {
+	max-width: 100%;
 }
 
 .clearfix {
@@ -110,8 +109,9 @@ p {
 }
 
 .leftcolumn {
+	margin-left: 5%;
   float: left;
-  width: 75%;
+  width: 70%;
 }
 
 /* Right column */
@@ -123,19 +123,11 @@ p {
 
 .card-header-color {
   background-color: #e8d9c5;
-  font-size: 20px;
-}
-
-#reviews-container {
-  width: 1300px;
-}
-
-#map-container {
-  width: 1300px;
+  font-size: 18px;
 }
 
 .card-body img {
-  max-width: 80%;
+  max-width: 75%;
   display: block;
 }
 
@@ -147,13 +139,13 @@ p {
 }
 
 .small {
-  font-size: 1.2em;
-  padding: 5px 12px;
+  font-size: 1em;
+  padding: 2.5px 6px;
 }
 
 .large {
-  font-size: 1.8em;
-  padding: 10px 24px;
+  font-size: 1em;
+  padding: 5px 12px;
 }
 
 .white {
