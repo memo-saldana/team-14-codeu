@@ -9,7 +9,7 @@ img {
  }
 
 #place {
-  width: 550px;
+  width: 350px;
 }
 
 #wrapper {
@@ -18,25 +18,23 @@ img {
 }
 
 #place-right {
-	margin-top: 2%;
-  width: 550px;
+  width: 370px;
 	overflow: hidden;
-	margin-right: 25%;
+	margin-right: 18%;
 }
 
 #place-right img {
-	height: 340px;
+	height: 220px;
 }
 
 #place-left {
-  width: 550px;
-	margin-left: 25%;
+  width: 370px;
+	margin-left: 18%;
 	float: left;
 }
 
 .formatted {
 	margin: auto;
-	margin-bottom: 2%;
   padding-bottom: 20px;
   padding-right: 20px;
   padding-left: 20px;
