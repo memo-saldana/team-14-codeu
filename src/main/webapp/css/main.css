@@ -18,12 +18,11 @@
 body {
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   width:100%
-	font-size: 1em;
 }
 
 nav {
   background-color: #FF7F50;
- 	font-size: 1.8em;
+  font-size: 1.8em;
   height: 70px;
   line-height: 70px;
   width: 100%;
@@ -48,12 +47,12 @@ nav li {
 }
 
 h1 {
- 	font-size: 3em;
-	color: #f88379;
+  font-size: 3em;
+  color: #f88379;
 }
 
 p {
-	font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .hidden {
@@ -84,9 +83,9 @@ p {
 }
 
 #footer {
-	color: #f88379;
-	font-size: 1em;
-	text-align: right;
+  color: #f88379;
+  font-size: 1em;
+  text-align: right;
 }
 
 #map {
@@ -119,21 +118,20 @@ p {
 .rightcolumn {
   float: left;
   width: 23%;
-  /*padding-left: 20px;*/
-	margin-right: 2%;
+  margin-right: 2%;
 }
 
 .card-header-color {
   background-color: #e8d9c5;
-	font-size: 20px;
+  font-size: 20px;
 }
 
 #reviews-container {
-	width: 1300px;
+  width: 1300px;
 }
 
 #map-container {
-	width: 1300px;
+  width: 1300px;
 }
 
 .card-body img {
@@ -142,28 +140,28 @@ p {
 }
 
 #btnSubmit{
-	border: thin solid gray;
+  border: thin solid gray;
   border-radius: 5px;
-	text-align: center;
+  text-align: center;
   overflow: hidden;
 }
 
 .small {
-	font-size: 1.2em;
-	padding: 5px 12px;
+  font-size: 1.2em;
+  padding: 5px 12px;
 }
 
 .large {
-	font-size: 1.8em;
-	padding: 10px 24px;
+  font-size: 1.8em;
+  padding: 10px 24px;
 }
 
 .white {
-	background-color: white;
-	color: #f88379;
+  background-color: white;
+  color: #f88379;
 }
 
 .inverted {
-	background-color: #f88379;
-	color: white;
+  background-color: #f88379;
+  color: white;
 }
