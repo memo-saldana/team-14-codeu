@@ -24,9 +24,9 @@
   <div class="py-5 text-center">
     <div class="container">
       <div class="row">
-        <div class="mx-auto col-md-8" >
-          <h1 class="mb-1" style="font-family: 'Pinyon Script', cursive; font-size:80px">Paris</h1>
-          <p class="lead text-muted" style="font-size:15px">“A walk about Paris will provide lessons in history, beauty, and in the point of Life.” – Thomas Jefferson</p>
+        <div class="mx-auto col-md-10" >
+          <h1 class="mb-1" style="font-family: 'Pinyon Script', cursive; font-size:100px">Paris</h1>
+          <p class="lead text-muted" style="font-size:1.5em">“A walk about Paris will provide lessons in history, beauty, and in the point of Life.” – Thomas Jefferson</p>
         </div>
       </div>
     </div>
@@ -48,18 +48,20 @@
     <div class="container">
       <h1>Popular Landmarks!</h1>
       <p>Click on a landmark to see pictures of it!</p>
-  		<div id="map"><iframe></iframe></div>
-  		<div id="landmark-div"></div>
-      <form id="marker-form"  class="hidden">
-      	<h2>Landmark:</h2>
-        <p>Title:</p>
-        <textarea name="title" id="title-input" class="rounded"></textarea>
-        <p>Upload an image:</p>
-        <input type="file" name="landmark" id="landmark-input">
-        <br/><br/>
-        <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
-      </form>
-  		<div class="clearfix"></div>
+  		<div id="map-container">
+				<div id="map"><iframe></iframe></div>
+  			<div id="landmark-div"></div>
+      	<form id="marker-form"  class="hidden">
+      		<h2>Landmark:</h2>
+        	<p>Title:</p>
+        	<textarea name="title" id="title-input" class="rounded"></textarea>
+        	<p>Upload an image:</p>
+        	<input type="file" name="landmark" id="landmark-input">
+        	<br/><br/>
+        	<button id="btnSubmit" onclick="postMarker(event)" class="rounded white">Submit</button>
+      	</form>
+  			<div class="clearfix"></div>
+			</div>
     </div>
 
     <br><br>
@@ -84,7 +86,7 @@
         <option value="zh">Chinese</option>
       </select>
 
-      <button onclick="requestTranslation();">Translate</button>
+      <button id="btnSubmit" onclick="requestTranslation();" class="rounded large inverted">Translate</button>
 
       <hr/>
       <div id="result"></div>

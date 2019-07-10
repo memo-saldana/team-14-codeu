@@ -18,20 +18,21 @@
 body {
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   width:100%
+	font-size: 1em;
 }
 
 nav {
   background-color: #FF7F50;
- 	font-size: 12pt;
-  height: 50px;
-  line-height: 50px;
+ 	font-size: 1.8em;
+  height: 70px;
+  line-height: 70px;
   width: 100%;
-  padding-left: 10px;
+  padding-left: 30px;
 }
 
 nav a {
   color: white;
-  margin-right: 10px;
+  margin-right: 25px;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -47,7 +48,12 @@ nav li {
 }
 
 h1 {
- color: #f88379;
+ 	font-size: 3em;
+	color: #f88379;
+}
+
+p {
+	font-size: 1.5em;
 }
 
 .hidden {
@@ -78,15 +84,15 @@ h1 {
 }
 
 #footer {
-	color: white;
-	font-size: 10pt;
+	color: #f88379;
+	font-size: 1em;
 	text-align: right;
 }
 
 #map {
-  width: 450px;
-  height: 525px;
-  margin-right: 2%;
+  width: 700px;
+  height: 800px;
+  margin-right: 5%;
   float: left;
   border: thin solid black;
 }
@@ -96,8 +102,7 @@ h1 {
 }
 
 #landmark-div {
-  max-width: 25%;
-  margin-right: 2%;
+  max-width: 550px;
   float: left;
 }
 
@@ -113,15 +118,52 @@ h1 {
 /* Right column */
 .rightcolumn {
   float: left;
-  width: 25%;
-  padding-left: 20px;
+  width: 23%;
+  /*padding-left: 20px;*/
+	margin-right: 2%;
 }
 
 .card-header-color {
   background-color: #e8d9c5;
+	font-size: 20px;
+}
+
+#reviews-container {
+	width: 1300px;
+}
+
+#map-container {
+	width: 1300px;
 }
 
 .card-body img {
-  max-width: 75%;
+  max-width: 80%;
   display: block;
+}
+
+#btnSubmit{
+	border: thin solid gray;
+  border-radius: 5px;
+	text-align: center;
+  overflow: hidden;
+}
+
+.small {
+	font-size: 1.2em;
+	padding: 5px 12px;
+}
+
+.large {
+	font-size: 1.8em;
+	padding: 10px 24px;
+}
+
+.white {
+	background-color: white;
+	color: #f88379;
+}
+
+.inverted {
+	background-color: #f88379;
+	color: white;
 }
