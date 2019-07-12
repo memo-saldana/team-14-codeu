@@ -42,7 +42,10 @@ function showMessageFormIfViewingSelf() {
         if (loginStatus.isLoggedIn &&
             loginStatus.username !== parameterUsername) {
           const messageForm = document.getElementById('message-form');
-          messageForm.style.display = "none";
+          messageForm.style.display = 'none';
+
+          const editButton = document.getElementById('edit-button');
+          editButton.style.display = 'none';
         }
       });
 }
