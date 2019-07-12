@@ -40,9 +40,9 @@ function showMessageFormIfViewingSelf() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
+            loginStatus.username !== parameterUsername) {
           const messageForm = document.getElementById('message-form');
-          messageForm.classList.remove('hidden');
+          messageForm.style.display = "none";
         }
       });
 }
