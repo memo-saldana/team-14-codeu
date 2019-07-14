@@ -22,7 +22,12 @@ function fetchMessages(city){
 
 function buildMessageDiv(message){
  const header = document.createElement('h4');
- header.appendChild(document.createTextNode(message.user));
+ const reviewerURL = document.createElement('a');
+ const url = "/user-page.html?user=" + message.user;
+ reviewerURL.href = url;
+ reviewerURL.appendChild(document.createTextNode(message.user));
+ reviewerURL.classList.add('reviewer');
+ header.appendChild(reviewerURL);
 
  const bodyDiv = document.createElement('div');
  bodyDiv.classList.add('message-body');
