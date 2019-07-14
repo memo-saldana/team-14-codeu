@@ -141,6 +141,7 @@ public class Datastore {
     userEntity.setProperty("email", user.getEmail() );
     userEntity.setProperty("firstName", user.getFirstName() );
     userEntity.setProperty("lastName", user.getLastName() );
+    userEntity.setProperty("yearOfBirth", user.getYearOfBirth());
     userEntity.setProperty("country", user.getCountry() );
     userEntity.setProperty("city", user.getCity() );
     userEntity.setProperty("aboutMe", user.getAboutMe() );
@@ -165,11 +166,12 @@ public class Datastore {
 
     String firstName = (String) userEntity.getProperty("firstName");
     String lastName = (String) userEntity.getProperty("lastName");
+    String yearOfBirth = (String) userEntity.getProperty("yearOfBirth");
     String country = (String) userEntity.getProperty("country");
     String city = (String) userEntity.getProperty("city");
     String aboutMe = (String) userEntity.getProperty("aboutMe");
     String recommendation = (String) userEntity.getProperty("recommendation");
-    User user = new User(email, firstName, lastName, country, city, aboutMe, recommendation);
+    User user = new User(email, firstName, lastName, yearOfBirth, country, city, aboutMe, recommendation);
 
     return user;
   }

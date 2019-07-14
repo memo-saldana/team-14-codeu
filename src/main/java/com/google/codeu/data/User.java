@@ -5,15 +5,17 @@ public class User {
   private String email;
   private String firstName;
   private String lastName;
+  private String yearOfBirth;
   private String country;
   private String city;
   private String aboutMe;
   private String recommendation;
 
-  public User(String email, String firstName, String lastName, String country, String city, String aboutMe, String recommendation) {
+  public User(String email, String firstName, String lastName, String yearOfBirth, String country, String city, String aboutMe, String recommendation) {
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
     this.country = country;
     this.city = city;
     this.aboutMe = aboutMe;
@@ -34,6 +36,10 @@ public class User {
 
   public String getName() {
     return firstName + " " + lastName;
+  }
+
+  public String getYearOfBirth() {
+    return yearOfBirth;
   }
 
   public String getCountry() {

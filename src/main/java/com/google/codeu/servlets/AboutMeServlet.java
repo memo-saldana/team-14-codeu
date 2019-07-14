@@ -15,6 +15,7 @@ import com.google.codeu.data.User;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.nodes.Document.OutputSettings;
+import java.time.Year;
 
 /**
  * Responds with a hard-coded message for testing purposes.
@@ -45,7 +46,7 @@ public class AboutMeServlet extends HttpServlet{
     }
     User userData = datastore.getUser(user);
 
-    if(userData == null || userData.getAboutMe() == null || userData.getFirstName() == null || userData.getLastName() == null || userData.getCountry() == null || userData.getCity() == null || userData.getRecommendation() == null) {
+    if(userData == null || userData.getAboutMe() == null || userData.getFirstName() == null || userData.getLastName() == null || userData.getYearOfBirth() == null || userData.getCountry() == null || userData.getCity() == null || userData.getRecommendation() == null) {
       return;
     }
 
@@ -56,11 +57,17 @@ public class AboutMeServlet extends HttpServlet{
     String city = userData.getCity();
     String recommendation = userData.getRecommendation();
 
+    int currentYear = Year.now().getValue();
+    int age = currentYear - Integer.parseInt(userData.getYearOfBirth());
+
     aboutMe = aboutMe.replace("\n","<br>");
     recommendation = recommendation.replace("\n","<br>");
 
     response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>Name</h3>");
     response.getOutputStream().println("<p>"+ firstName + " " + lastName + "</p>");
+
+    response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>Age</h3>");
+    response.getOutputStream().println("<p>" + age + "</p>");
 
     response.getOutputStream().println("<h3 style='color: #f88379; font-size: 20px;'>From</h3>");
     response.getOutputStream().println("<p>" + city + ", " + country + "</p>");
@@ -83,12 +90,13 @@ public class AboutMeServlet extends HttpServlet{
     String userEmail = userService.getCurrentUser().getEmail();
     String firstName = Jsoup.clean(request.getParameter("firstname"), Whitelist.none());
     String lastName = Jsoup.clean(request.getParameter("lastname"), Whitelist.none());
+    String yearOfBirth = Jsoup.clean(request.getParameter("year-of-birth"), Whitelist.none());
     String country = Jsoup.clean(request.getParameter("country"), Whitelist.none());
     String city = Jsoup.clean(request.getParameter("city"), Whitelist.none());
     String aboutMe = Jsoup.clean(request.getParameter("about-me"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
     String recommendation = Jsoup.clean(request.getParameter("recommendation"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
 
-    User user = new User(userEmail, firstName, lastName, country, city, aboutMe, recommendation);
+    User user = new User(userEmail, firstName, lastName, yearOfBirth, country, city, aboutMe, recommendation);
     datastore.storeUser(user);
 
     response.sendRedirect("/user-page.html?user="+userEmail);
