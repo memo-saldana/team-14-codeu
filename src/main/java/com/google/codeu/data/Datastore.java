@@ -185,7 +185,9 @@ public class Datastore {
       double lng = (double) entity.getProperty("lng");
       String content = (String) entity.getProperty("content");
       String landmark = (String) entity.getProperty("landmark");
-      Marker marker = new Marker(lat, lng, content, landmark);
+      List<Long> ratings =(List<Long>) entity.getProperty("ratings");
+      
+      Marker marker = new Marker(lat, lng, content, landmark, ratings);
       markers.add(marker);
     }
     return markers;
@@ -197,6 +199,7 @@ public class Datastore {
     markerEntity.setProperty("lng", marker.getLng());
     markerEntity.setProperty("content", marker.getContent());
     markerEntity.setProperty("landmark", marker.getLandmark());
+    markerEntity.setProperty("ratings", marker.getRatings());
     datastore.put(markerEntity);
   }
 
@@ -213,10 +216,40 @@ public class Datastore {
     if(markerEntity == null) {
       return null;
     }
-
+    List<Long> ratings =(List<Long>) markerEntity.getProperty("ratings");
+    
     datastore.delete(markerEntity.getKey());
 
-    Marker deletedMarker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),(String) markerEntity.getProperty("content") );
+    Marker deletedMarker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),
+      (String) markerEntity.getProperty("content"), (String) markerEntity.getProperty("landmark"), ratings );
     return deletedMarker;
+  }
+
+  public Marker addLandmarkRating(Double lat, Double lng, String content, int rating) {
+    Query query = new Query("Marker")
+      .setFilter(CompositeFilterOperator.and(
+        new Query.FilterPredicate("lat", FilterOperator.EQUAL, lat),
+        new Query.FilterPredicate("lng", FilterOperator.EQUAL, lng),
+        new Query.FilterPredicate("content", FilterOperator.EQUAL, content)));
+    PreparedQuery results = datastore.prepare(query);
+    Entity markerEntity = results.asSingleEntity();
+    
+    if(markerEntity == null){
+      return null;
+    } 
+    List<Long> ratings =(List<Long>) markerEntity.getProperty("ratings");
+
+    // update ratings array
+    Long val = ratings.get(rating-1);
+    ratings.set(rating-1, val + 1);
+    markerEntity.setProperty("ratings", ratings);
+    datastore.put(markerEntity);
+
+    // return new marker data
+    Marker marker = new Marker((double) markerEntity.getProperty("lat"), (double) markerEntity.getProperty("lng"),
+      (String) markerEntity.getProperty("content"), (String) markerEntity.getProperty("landmark"), ratings );
+    
+    return marker;
+
   }
 }

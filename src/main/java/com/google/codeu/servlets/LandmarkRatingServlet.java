@@ -24,8 +24,8 @@ import org.jsoup.safety.Whitelist;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/markers")
-public class MarkerServlet extends HttpServlet {
+@WebServlet("/ratings")
+public class LandmarkRatingServlet extends HttpServlet {
 
   private Datastore datastore;
 
@@ -34,41 +34,41 @@ public class MarkerServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  /** Responds with a JSON array containing marker data. */
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
-
-    List<Marker> markers = datastore.getMarkers();
-    Gson gson = new Gson();
-    String json = gson.toJson(markers);
-
-    response.getOutputStream().println(json);
-  }
-
-  /** Accepts a POST request containing a new marker. */
+  /** Accepts a POST request containing a new rating for a landmark. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     String latStr = request.getParameter("lat");
     String lngStr = request.getParameter("lng");
+    String ratingStr = request.getParameter("rating");
+    String resp = "";
     if(latStr == null){
-      String resp = "Lat is not defined";
-      response.getOutputStream().println(resp);
+      resp += "Lat is not defined. ";
     }
     if(lngStr == null){
-      String resp = "Lng is not defined";
+      resp += "Lng is not defined. ";
+    }
+    if(ratingStr == null){
+      resp += "Rating is not defined. ";
+    }
+    if(request.getParameter("content") == null){
+      resp += "Content is not defined. ";
+    }
+    if(resp.length() > 0){
       response.getOutputStream().println(resp);
+      return;  
     }
     double lat = Double.parseDouble(latStr);
     double lng = Double.parseDouble(lngStr);
-
+    int rating = Integer.parseInt(ratingStr);
+    if(rating < 1 || rating > 5) {
+      resp = "Invalid rating";
+      response.getOutputStream().println(resp);
+      return;
+    }
     String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
 
-    String url = getFileUrl(request, "landmark");
-
-    Marker marker = new Marker(lat, lng, content, url);
-    datastore.storeMarker(marker);
+    Marker marker = datastore.addLandmarkRating(lat,lng,content,rating);
     
     
     Gson gson = new Gson();
