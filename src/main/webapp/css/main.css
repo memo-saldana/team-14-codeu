@@ -136,24 +136,31 @@ h1 {
   border-radius: 5px;
   text-align: center;
   overflow: hidden;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
-.small {
-  font-size: 1em;
-  padding: 2.5px 6px;
-}
-
-.large {
+.button1 {
+  background-color: #f88379;
+  color: white;
   font-size: 1em;
   padding: 5px 12px;
-}
+} 
 
-.white {
+.button2 {
+  font-size: 1em;
+  padding: 2.5px 6px;
   background-color: white;
   color: #f88379;
 }
 
-.inverted {
+.button1:hover {
+  background-color: white;
+  color: #f88379;
+}
+
+.button2:hover {
   background-color: #f88379;
   color: white;
 }
