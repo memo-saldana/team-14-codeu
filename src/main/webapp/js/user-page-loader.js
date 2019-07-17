@@ -39,8 +39,8 @@ function showMessageFormIfViewingSelf() {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username !== parameterUsername) {
+        if ((!loginStatus.isLoggedIn) || (loginStatus.isLoggedIn &&
+            loginStatus.username !== parameterUsername)) {
           const messageForm = document.getElementById('message-form');
           messageForm.style.display = 'none';
 
