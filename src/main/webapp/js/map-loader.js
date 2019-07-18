@@ -1,6 +1,7 @@
 let editMarker,
     map,
-    displayMarkers = {},
+    displayMarkers = {},  
+    rateDiv = document.getElementById('ratings'),
     landmarkDiv,
     currentActiveInfoWindow;
 
@@ -207,8 +208,8 @@ function showLandmark(image, infoWindow, marker, ratings){
   
   // Display ratings if available
   if(ratings){
-    landmarkDiv.children[2].innerText = `Avg: ${ratings.avg} \n
-                                               Total ratings: ${ratings.total}` ;
+    displayRating(ratings.avg);
+    landmarkDiv.children[2].innerText = `Total ratings: ${ratings.total}` ;
   } else {
     landmarkDiv.children[2].innerText = 'Ratings Unavailable';
   }
@@ -216,4 +217,17 @@ function showLandmark(image, infoWindow, marker, ratings){
 
   infoWindow.open(map, marker);
   currentActiveInfoWindow = infoWindow;
+}
+
+function displayRating(average){
+
+  let roundAvg = Math.round(average);
+
+  for(let i=0; i<5; i++){
+    if((i+1)<=roundAvg){
+      rateDiv.children[i].innerText = 'star';
+    } else {
+      rateDiv.children[i].innerText = 'star_border';
+    }
+  }
 }
