@@ -32,6 +32,7 @@ public class MarkerServlet extends HttpServlet {
   @Override
   public void init() {
     datastore = new Datastore();
+    datastore.verifyMarkerRatings();
   }
 
   /** Responds with a JSON array containing marker data. */

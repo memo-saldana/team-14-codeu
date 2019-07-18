@@ -1,7 +1,6 @@
 package com.google.codeu.data;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 
 public class Marker {
   private double lng, lat;
@@ -20,7 +19,7 @@ public class Marker {
     this.ratings = new ArrayList<>();
     for(int i = 0; i<5; i++){
 
-      this.ratings.add((long) 0);
+      this.ratings.add(0L);
     }
   }
   public Marker(double lat, double lng, String content ) {

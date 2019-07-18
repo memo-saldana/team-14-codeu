@@ -252,4 +252,26 @@ public class Datastore {
     return marker;
 
   }
+
+  // Check that all markers have a ratings, array, if not, adds it with 0 ratings
+  public void verifyMarkerRatings() {
+
+    Query query = new Query("Marker");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+
+      Object ratingsObj = entity.getProperty("ratings");
+      if( ratingsObj == null ){
+        System.out.println("NO RATINGS FOUND FOR" + entity.getProperty("content"));
+        List<Long> ratings = new ArrayList<>();
+        for(int i = 0; i<5; i++){
+          ratings.add(0L);
+        }
+        entity.setProperty("ratings", ratings);
+        datastore.put(entity);
+      }
+    }
+  }
+  
 }
