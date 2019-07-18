@@ -1,7 +1,7 @@
 let editMarker,
     map,
     displayMarkers = {},
-    currentImage,
+    landmarkDiv,
     currentActiveInfoWindow;
 
 /**
@@ -10,7 +10,7 @@ let editMarker,
  * @param {Number} lng 
  * @param {String} description 
  */
-function addDisplayMarker(lat, lng, title, image){
+function addDisplayMarker(lat, lng, title, image, ratingsArray){
   const marker = new google.maps.Marker({
     position: { lat: lat, lng: lng },
     map: map
@@ -19,8 +19,24 @@ function addDisplayMarker(lat, lng, title, image){
     content: buildDeletableMarker( lat, lng, title)
   })
   console.log('infoWindow1 :', infoWindow);
+  let ratings;
+  if(ratingsArray){
+    let avg = 0;
+    let total = 0;
+    for(let i=0; i<5; i++){
+      // sums all weighted
+      avg += ratingsArray[i]*(i+1);
+      // Counts Ratings
+      total += ratingsArray[i];
+    }
+    // Calculates avg
+    avg /= total;
+
+    ratings = {avg, total};
+  }
+
   marker.addListener('click', () => {
-    showLandmark(image, infoWindow, marker);
+    showLandmark(image, infoWindow, marker, ratings);
   })
 
   // Uses a dictionary with both lat and lng for faster lookup
@@ -52,8 +68,8 @@ function fetchMarkers(){
   fetch('/markers')
   .then((response) => response.json())
   .then((markers) => {
-    markers.forEach((marker) => {
-     addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark)
+    markers.forEach((marker,i) => {
+     addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark, marker.ratings);
     });
   });
 }
@@ -124,7 +140,7 @@ function postMarker(ev){
 
     // Create display marker for this newly created landmark
     editMarker.setMap(null);
-    const {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark);
+    const {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark, marker.ratings);
     showLandmark(marker.landmark, infoWindow, mapMarker);
     infoWindow.open(map, mapMarker);
   })
@@ -178,20 +194,26 @@ function closeOtherDialogs(){
   }
 }
 
-function showLandmark(image, infoWindow, marker){
+function showLandmark(image, infoWindow, marker, ratings){
   closeOtherDialogs();
-  console.log('infoWindow :', infoWindow);
-  if(currentImage){
-    // If there is a previous image displayed, remove it
-    currentImage.src = image;
-    
-  } else {
-    // Show current image'
-    let div = document.getElementById('landmark-div');
-    currentImage = document.createElement('img')
-    currentImage.src = image;
-    div.appendChild(currentImage);
+
+  if(!landmarkDiv){
+    landmarkDiv = document.getElementById('landmark-div');
+    landmarkDiv.classList.remove('hidden');
   }
+  console.log('landmarkDiv.children :', landmarkDiv.children);
+  // Display image
+  landmarkDiv.children[0].src = image;
+  
+  // Display ratings if available
+  if(ratings){
+    landmarkDiv.children[2].innerText = `Avg: ${ratings.avg} \n
+                                               Total ratings: ${ratings.total}` ;
+  } else {
+    landmarkDiv.children[2].innerText = 'Ratings Unavailable';
+  }
+
+
   infoWindow.open(map, marker);
   currentActiveInfoWindow = infoWindow;
 }

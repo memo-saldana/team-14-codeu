@@ -48,7 +48,11 @@
     <h1>Popular Landmarks!</h1>
     <p>Click on a landmark to see pictures of it!</p>
 		<div id="map"><iframe></iframe></div>
-		<div id="landmark-div"></div>
+		<div id="landmark-div" class="hidden">
+      <img src="" alt="Landmark Image">
+      <span id="ratings" ></span>
+      <p></p>
+    </div>
     <form id="marker-form"  class="hidden">
     	<h2>Landmark:</h2>
       <p>Title:</p>
@@ -58,6 +62,7 @@
       <br/><br/>
       <button id="btnSubmit" onclick="postMarker(event)" class="rounded">Submit</button>
     </form>
+    
 		<div class="clearfix"></div>
   </div>
 
