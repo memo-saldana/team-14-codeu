@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Amsterdam</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Pinyon+Script&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/translation.css">
  	<link rel="stylesheet" href="/css/main.css">
@@ -49,7 +51,17 @@
     <h1>Popular Landmarks!</h1>
     <p>Click on a landmark to see pictures of it!</p>
 		<div id="map"><iframe></iframe></div>
-		<div id="landmark-div"></div>
+    <div id="landmark-div" class="hidden">
+      <img src="" alt="Landmark Image">
+      <span id="ratings" >
+        <i class="material-icons" id="star1">star</i>
+        <i class="material-icons" id="star2">star</i>
+        <i class="material-icons" id="star3">star</i>
+        <i class="material-icons" id="star4">star</i>
+        <i class="material-icons" id="star5">star</i>
+      </span>
+      <p></p>
+    </div>    
     <form id="marker-form"  class="hidden">
     	<h2>Landmark:</h2>
       <p>Title:</p>
