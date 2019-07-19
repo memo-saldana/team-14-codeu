@@ -19,9 +19,13 @@ limitations under the License.
   <head>
     <meta charset="UTF-8">
     <title>Travellege</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/index.css">
 		<script src="/js/navigation-loader.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body onload="addLoginOrLogoutLinkToNavigation();">
     <nav>
@@ -30,30 +34,46 @@ limitations under the License.
         <li><a href="/aboutus.html">About Our Team</a></li>
       </ul>
     </nav>
-    <h1 class="centered">TRAVELLEGE</h1>
-  	<p>Worldwide hub for student travelers to explore, connect and share the best low-budget tourist attractions in the most popular destinations.</p>
-		<p>Get the inside scoop on where to go and what to see!</p>
-		<br>
-		<p class="italic centered">Recommended by experienced locals and novice travelers like yourself!</p>
-		<br><br>
-		<div id="wrapper">
+
+    <div class="py-5">
+      <div class="row">
+        <div class="mx-auto col-md-8" >
+          <div id="header">
+            <h1>TRAVELLEGE</h1>
+            <img src="grad.png"></img>
+          </div>
+        	<br>
+					<p>Worldwide hub for student travelers to explore, connect and share the best low-budget tourist attractions in the most popular destinations.</p>
+      		<p>Get the inside scoop on where to go and what to see!</p>
+          <p class="italic centered">Recommended by experienced locals and novice travelers like yourself!</p>
+        </div>
+      </div>
+    </div>
+
+		<div id="container">
 			<div id="place-left" class="rounded centered formatted">
-				<h1><a href="/amsterdam.html">Amsterdam</a></h1>
-				<img src="http://images.ctfassets.net/uld4p9k0kh49/2EW7HRp7BkZPaYVX8CX4VQ/4e3b34b738ef5028af781e670a5b2c2d/summer-amsterdam-FP.jpg">
+        <a href="/amsterdam.html">
+  				<h2>Amsterdam</h2>
+  				<img src="http://images.ctfassets.net/uld4p9k0kh49/2EW7HRp7BkZPaYVX8CX4VQ/4e3b34b738ef5028af781e670a5b2c2d/summer-amsterdam-FP.jpg">
+        </a>
 			</div>
 	  	<div id="place-right" class="rounded centered formatted">
-    		<h1><a href="/paris.html">Paris</a></h1>
-      	<img src="https://www.telegraph.co.uk/content/dam/Travel/2018/May/paris.jpg?imwidth=450">
+        <a href="/paris.html">
+      		<h2>Paris</h2>
+        	<img src="https://www.telegraph.co.uk/content/dam/Travel/2018/May/paris.jpg?imwidth=450">
+        </a>
     	</div>
 		</div>
-		<br><br>
+		<br><br><br>
 		<div id="place" class="rounded centered formatted">
- 			<h1><a href="/venice.html">Venice</a></h1>
- 			<img src="https://s27363.pcdn.co/wp-content/uploads/2016/07/Best-Things-to-do-in-Venice-Italy-1163x775.jpg.optimal.jpg">
+      <a href="/venice.html">
+   			<h2>Venice</h2>
+   			<img src="https://s27363.pcdn.co/wp-content/uploads/2016/07/Best-Things-to-do-in-Venice-Italy-1163x775.jpg.optimal.jpg">
+      </a>
 		</div>
 
 		<br><br><br>
-		<div id="footer">
+		<div id="footer" class="padded">
 			<p>Quynh implemented the user profile page, reviews and translation.  Memo implemented the maps feature.  Sarah implemented the CSS styling and image integration.</p>
 		</div>
 	</body>

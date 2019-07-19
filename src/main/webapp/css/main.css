@@ -16,23 +16,22 @@
 
 /* Prevent the page from becoming too wide. */
 body {
-  max-width: 800px;
-  margin: auto;
-  width: 90%;
-  padding: 10px;
-  background: linear-gradient(white, #FF7F50) fixed;
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  width:100%
 }
 
 nav {
   background-color: #FF7F50;
- 	font-size: 12pt;
-  padding: 5px;
+  font-size: 12pt;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  padding-left: 20px;
 }
 
 nav a {
   color: white;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 /* Remove bullet points from navigation bar. */
@@ -44,11 +43,11 @@ nav ul {
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 h1 {
- color: #f88379;
+  color: #f88379;
 }
 
 .hidden {
@@ -59,7 +58,7 @@ h1 {
 	background-color: white;
 	margin-top: 20px;
 }
- 
+
 .centered{
   text-align: center;
 }
@@ -79,14 +78,14 @@ h1 {
 }
 
 #footer {
-	color: white;
-	font-size: 10pt;
-	text-align: right;
+  color: #f88379;
+  font-size: 10pt;
+  text-align: right;
 }
 
 #map {
-  width: 450px;
-  height: 525px;
+  width: 500px;
+  height: 600px;
   margin-right: 2%;
   float: left;
   border: thin solid black;
@@ -97,9 +96,12 @@ h1 {
 }
 
 #landmark-div {
-  max-width: 25%;
-  margin-right: 2%;
+  width: 340px;
   float: left;
+}
+
+.container img {
+	max-width: 100%;
 }
 
 .clearfix {
@@ -109,4 +111,65 @@ h1 {
 #ratings > i {
   cursor: pointer;
   color: #FF7F50;
+}
+
+.leftcolumn {
+	margin-left: 5%;
+  float: left;
+  width: 70%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 23%;
+  margin-right: 2%;
+}
+
+.card-header-color {
+  background-color: #e8d9c5;
+  font-size: 18px;
+}
+
+.card-body img {
+  max-width: 75%;
+  display: block;
+}
+
+#btnSubmit{
+  border: thin solid gray;
+  border-radius: 5px;
+  text-align: center;
+  overflow: hidden;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: #f88379;
+  color: white;
+  font-size: 1em;
+  padding: 5px 12px;
+} 
+
+.button2 {
+  font-size: 1em;
+  padding: 2.5px 6px;
+  background-color: white;
+  color: #f88379;
+}
+
+.button1:hover {
+  background-color: white;
+  color: #f88379;
+}
+
+.button2:hover {
+  background-color: #f88379;
+  color: white;
+}
+
+.reviewer {
+  color: #f88379;
 }

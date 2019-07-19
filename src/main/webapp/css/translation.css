@@ -1,10 +1,13 @@
 #text {
   width: 500px;
-  height: 125px;
+  height: 200px;
 }
 
 #language {
   display: block;
   margin-top: 25px;
+  width: 250px;
+  height: 25px;
+  font-size: 1em;
   margin-bottom: 25px;
 }

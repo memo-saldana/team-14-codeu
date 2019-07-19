@@ -89,7 +89,7 @@ input[type=button] {
   height: 50px;
   width: 100px;
   font-size: 14pt;
-	color: white;
+  color: white;
   float:right;
   margin-right:20px;
   display: inline-block
@@ -97,13 +97,11 @@ input[type=button] {
 
 
 #content {
-  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 
 #message-container {
-	max-width: 600px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -124,7 +122,6 @@ input[type=button] {
   border-radius: 5px;
 }
 
-
 #overlay {
   position: fixed;
   display: none;
@@ -140,8 +137,8 @@ input[type=button] {
 }
 
 #form {
-  width:50%;
-  height:600px;
+  width: 50%;
+  height: 650px;
   background-color: white;
   border: 1px solid white;
   border-radius: 7px;

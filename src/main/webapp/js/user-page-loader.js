@@ -39,10 +39,13 @@ function showMessageFormIfViewingSelf() {
         return response.json();
       })
       .then((loginStatus) => {
-        if (loginStatus.isLoggedIn &&
-            loginStatus.username == parameterUsername) {
+        if ((!loginStatus.isLoggedIn) || (loginStatus.isLoggedIn &&
+            loginStatus.username !== parameterUsername)) {
           const messageForm = document.getElementById('message-form');
-          messageForm.classList.remove('hidden');
+          messageForm.style.display = 'none';
+
+          const editButton = document.getElementById('edit-button');
+          editButton.style.display = 'none';
         }
       });
 }

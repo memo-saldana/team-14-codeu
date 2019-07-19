@@ -44,70 +44,75 @@ limitations under the License.
 
       <br>
 
-      <div class="about-me">
-        <h2 style="inline-block">About me</h2>
-        <button onclick="on()"><i class="fa fa-edit"></i></button>
-        <div id="about-me-container" class="centered">Loading...</div>
-        <div id="overlay">
-          <form id="form" action="/about" method="POST">
-            <div class="header">
-              <p> Edit your profile </p>
-              <div class="close" onclick="off()"><i class="fa fa-times"></i></div>
-            </div>
-            <div class="form-group">
-              <input class="form-control" name="firstname" placeholder="First Name" required>
-            </div>
+      <div class="container">
+        <div class="about-me">
+          <h2 style="inline-block">About me</h2>
+          <button id="edit-button" onclick="on()"><i class="fa fa-edit"></i></button>
+          <div id="about-me-container" class="centered">Loading...</div>
+          <div id="overlay">
+            <form id="form" action="/about" method="POST">
+              <div class="header">
+                <p> Edit your profile </p>
+                <div class="close" onclick="off()"><i class="fa fa-times"></i></div>
+              </div>
+              <div class="form-group">
+                <input class="form-control" name="firstname" placeholder="First Name" required>
+              </div>
 
-            <div class="form-group">
-              <input class="form-control" name="lastname" placeholder="Last Name" required>
-            </div>
+              <div class="form-group">
+                <input class="form-control" name="lastname" placeholder="Last Name" required>
+              </div>
 
-            <div class="form-group">
-              <input class="form-control" name="country" placeholder="Country" required>
-            </div>
+              <div class="form-group">
+                <input class="form-control" name="year-of-birth" placeholder="Year of Birth" required>
+              </div>
 
-            <div class="form-group">
-              <input class="form-control" name="city" placeholder="City" required>
-            </div>
+              <div class="form-group">
+                <input class="form-control" name="country" placeholder="Country" required>
+              </div>
 
-            <div class="form-group">
-              <textarea name="about-me" placeholder="About me" class="form-control" rows=3 required></textarea>
-            </div>
+              <div class="form-group">
+                <input class="form-control" name="city" placeholder="City" required>
+              </div>
 
-            <div class="form-group">
-              <textarea class="form-control" name="recommendation" placeholder="Best place to visit in your city?" rows=3 required></textarea>
-            </div>
+              <div class="form-group">
+                <textarea name="about-me" placeholder="About me" class="form-control" rows=3 required></textarea>
+              </div>
 
-            <input type="submit" value="Submit" class="rounded form-button">
-            <input type="button" onclick="off()" value="Cancel" class="rounded form-button">
-          </form>
+              <div class="form-group">
+                <textarea class="form-control" name="recommendation" placeholder="Best place to visit in your city?" rows=3 required></textarea>
+              </div>
+
+              <input type="submit" value="Submit" class="rounded form-button">
+              <input type="button" onclick="off()" value="Cancel" class="rounded form-button">
+            </form>
+          </div>
         </div>
 
-      </div>
+  			<div class="padded rounded panel">
+      		<form id="message-form"action="/messages" method="POST" enctype="multipart/form-data" class="hidden">
+        		<h3>Enter a new review:</h3>
+      			<br/>
+            <select name="city">
+              <option value="" disabled selected hidden>For which city?</option>
+              <option value="amsterdam">Amsterdam</option>
+              <option value="paris">Paris</option>
+              <option value="venice">Venice</option>
+            </select>
 
-			<div class="padded rounded panel">
-    		<form id="message-form"action="/messages" method="POST" enctype="multipart/form-data" class="hidden">
-      		<h3>Enter a new review:</h3>
-    			<br/>
-          <select name="city">
-            <option value="" disabled selected hidden>For which city?</option>
-            <option value="amsterdam">Amsterdam</option>
-            <option value="paris">Paris</option>
-            <option value="venice">Venice</option>
-          </select>
+            <br/>
+        		<textarea name="message" id="message-input" class="rounded"></textarea>
+  					<p>Upload an image:</p>
+        		<input type="file" name="image">
+        		<br/><br/>
+        		<input id="btnSubmit" type="submit" value="Submit" class="button1">
+      		</form>
+  			</div>
+        <hr/>
 
-          <br/>
-      		<textarea name="message" id="message-input" class="rounded"></textarea>
-					<p>Upload an image:</p>
-      		<input type="file" name="image">
-      		<br/><br/>
-      		<input type="submit" value="Submit" class="rounded">
-    		</form>
-			</div>
-    	<hr/>
-
-		<div id="message-container">Loading...</div>
-	</div>
+  		  <div id="message-container">Loading...</div>
+  	 </div>
+    </div>
 
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/user-page-loader.js"></script>
