@@ -32,6 +32,7 @@ public class MarkerServlet extends HttpServlet {
   @Override
   public void init() {
     datastore = new Datastore();
+    datastore.verifyMarkerRatings();
   }
 
   /** Responds with a JSON array containing marker data. */
@@ -57,7 +58,7 @@ public class MarkerServlet extends HttpServlet {
       response.getOutputStream().println(resp);
     }
     if(lngStr == null){
-      String resp = "Lat is not defined";
+      String resp = "Lng is not defined";
       response.getOutputStream().println(resp);
     }
     double lat = Double.parseDouble(latStr);

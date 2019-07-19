@@ -108,6 +108,11 @@ h1 {
   clear:both;
 }
 
+#ratings > i {
+  cursor: pointer;
+  color: #FF7F50;
+}
+
 .leftcolumn {
 	margin-left: 5%;
   float: left;
