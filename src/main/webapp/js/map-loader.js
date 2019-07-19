@@ -1,10 +1,9 @@
 let editMarker,
     map,
-    displayMarkers = {},  
-    rateDiv = document.getElementById('ratings'),
+    displayMarkers = {},
     landmarkDiv,
+    currentLandmark = {},
     currentActiveInfoWindow;
-
 /**
  * Adds a new marker with a toggable info window
  * @param {Number} lat 
@@ -19,25 +18,13 @@ function addDisplayMarker(lat, lng, title, image, ratingsArray){
   const infoWindow = new google.maps.InfoWindow({
     content: buildDeletableMarker( lat, lng, title)
   })
-  console.log('infoWindow1 :', infoWindow);
-  let ratings;
-  if(ratingsArray){
-    let avg = 0;
-    let total = 0;
-    for(let i=0; i<5; i++){
-      // sums all weighted
-      avg += ratingsArray[i]*(i+1);
-      // Counts Ratings
-      total += ratingsArray[i];
-    }
-    // Calculates avg
-    avg /= total;
-
-    ratings = {avg, total};
-  }
+  let ratings = calculateRatingAvg(ratingsArray);
 
   marker.addListener('click', () => {
     showLandmark(image, infoWindow, marker, ratings);
+    currentLandmark.lat = lat;
+    currentLandmark.lng = lng;
+    currentLandmark.content = title;
   })
 
   // Uses a dictionary with both lat and lng for faster lookup
@@ -62,6 +49,7 @@ function createMap(lat, lng){
     createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
   })
   fetchMarkers();
+  configureStars();
 }
 
  /** Fetches markers from the backend and adds them to the map. */
@@ -142,7 +130,8 @@ function postMarker(ev){
     // Create display marker for this newly created landmark
     editMarker.setMap(null);
     const {infoWindow, mapMarker} = addDisplayMarker(marker.lat, marker.lng, marker.content, marker.landmark, marker.ratings);
-    showLandmark(marker.landmark, infoWindow, mapMarker);
+    let ratingObj = calculateRatingAvg(marker.ratings); 
+    showLandmark(marker.landmark, infoWindow, mapMarker,  ratingObj);
     infoWindow.open(map, mapMarker);
   })
   // Future integrations: Create dialog box with errors
@@ -202,7 +191,6 @@ function showLandmark(image, infoWindow, marker, ratings){
     landmarkDiv = document.getElementById('landmark-div');
     landmarkDiv.classList.remove('hidden');
   }
-  console.log('landmarkDiv.children :', landmarkDiv.children);
   // Display image
   landmarkDiv.children[0].src = image;
   
@@ -214,15 +202,17 @@ function showLandmark(image, infoWindow, marker, ratings){
     landmarkDiv.children[2].innerText = 'Ratings Unavailable';
   }
 
-
-  infoWindow.open(map, marker);
-  currentActiveInfoWindow = infoWindow;
+  if(infoWindow){
+    infoWindow.open(map, marker);
+    currentActiveInfoWindow = infoWindow;
+  }
+  currentLandmark.avg = ratings.avg;
 }
 
 function displayRating(average){
 
   let roundAvg = Math.round(average);
-
+  let rateDiv = document.getElementById('ratings');
   for(let i=0; i<5; i++){
     if((i+1)<=roundAvg){
       rateDiv.children[i].innerText = 'star';
@@ -230,4 +220,59 @@ function displayRating(average){
       rateDiv.children[i].innerText = 'star_border';
     }
   }
+}
+
+function configureStars(){
+  let ratingsDiv = document.getElementById('ratings');
+  for (let i = 0; i<5; i++) {
+    ratingsDiv.children[i].addEventListener('click', ()=> {
+      
+      const baseURL = window.location.protocol + '//' + window.location.host;  
+      const url = new URL(baseURL+'/ratings');
+      url.searchParams.append('lat',currentLandmark.lat);
+      url.searchParams.append('lng',currentLandmark.lng);
+      url.searchParams.append('content',currentLandmark.content);
+      url.searchParams.append('rating',(i+1));
+      // Create request to upload url
+      fetch(url,{
+        method: 'POST'
+      })
+      .then(response => response.json())
+      .then(newMarker => {
+        let ratingsObj = calculateRatingAvg(newMarker.ratings);
+        showLandmark(newMarker.landmark,null, null, ratingsObj);
+      })
+    })
+    ratingsDiv.children[i].addEventListener('mouseover', () => {
+      for(let j=0; j<5; j++){
+        if(j<=i){
+          ratingsDiv.children[j].innerText = 'star';
+        } else {
+          ratingsDiv.children[j].innerText = 'star_border';
+        }
+      }
+    })    
+    ratingsDiv.children[i].addEventListener('mouseleave', () => {
+      displayRating(currentLandmark.avg);
+    })    
+  }
+}
+
+function calculateRatingAvg(ratingsArray) {
+  let ratings;
+  if(ratingsArray){
+    let avg = 0;
+    let total = 0;
+    for(let i=0; i<5; i++){
+      // sums all weighted
+      avg += ratingsArray[i]*(i+1);
+      // Counts Ratings
+      total += ratingsArray[i];
+    }
+    // Calculates avg
+    avg /= total;
+
+    ratings = {avg, total};
+  }
+  return ratings;
 }

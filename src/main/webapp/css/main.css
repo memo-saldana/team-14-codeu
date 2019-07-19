@@ -105,3 +105,8 @@ h1 {
 .clearfix {
   clear:both;
 }
+
+#ratings > i {
+  cursor: pointer;
+  color: #FF7F50;
+}
