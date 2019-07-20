@@ -65,22 +65,31 @@ function fetchMarkers(){
 
 /** Creates a marker that shows a textbox the user can edit. */
 function createMarkerForEdit(lat, lng){
-  // If we're already showing an editable marker, then remove it.
-  closeOtherDialogs();
-
-  editMarker = new google.maps.Marker({
-    position: {lat: lat, lng: lng},
-    map: map
-  });
-  const infoWindow = new google.maps.InfoWindow({
-    content: buildInfoWindowInput()
-  });
-  // When the user closes the editable info window, remove the marker.
-  google.maps.event.addListener(infoWindow, 'closeclick', () => {
-    editMarker.setMap(null);
-  });
-  infoWindow.open(map, editMarker);
- }
+  checkLoginStatus()
+    .then(username => {
+      // If we're already showing an editable marker, then remove it.
+      closeOtherDialogs();
+      
+      editMarker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map
+      });
+      const infoWindow = new google.maps.InfoWindow({
+        content: buildInfoWindowInput()
+      });
+      // When the user closes the editable info window, remove the marker.
+      google.maps.event.addListener(infoWindow, 'closeclick', () => {
+        editMarker.setMap(null);
+      });
+      infoWindow.open(map, editMarker);
+    }) 
+    .catch(err => {
+      // Alerts for now, maybe create another type of pop up
+      // message that is nicer in future versions?
+      alert(err)
+      window.location.href= '/login'
+    })
+}
 
 /** Builds and returns HTML elements that show an editable textbox and a submit button. */
 function buildInfoWindowInput(){
@@ -226,21 +235,28 @@ function configureStars(){
   let ratingsDiv = document.getElementById('ratings');
   for (let i = 0; i<5; i++) {
     ratingsDiv.children[i].addEventListener('click', ()=> {
-      
-      const baseURL = window.location.protocol + '//' + window.location.host;  
-      const url = new URL(baseURL+'/ratings');
-      url.searchParams.append('lat',currentLandmark.lat);
-      url.searchParams.append('lng',currentLandmark.lng);
-      url.searchParams.append('content',currentLandmark.content);
-      url.searchParams.append('rating',(i+1));
-      // Create request to upload url
-      fetch(url,{
-        method: 'POST'
+      checkLoginStatus()
+      .then(username =>{
+        const baseURL = window.location.protocol + '//' + window.location.host;  
+        const url = new URL(baseURL+'/ratings');
+        url.searchParams.append('lat',currentLandmark.lat);
+        url.searchParams.append('lng',currentLandmark.lng);
+        url.searchParams.append('content',currentLandmark.content);
+        url.searchParams.append('rating',(i+1));
+        // Create request to upload url
+        fetch(url,{
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(newMarker => {
+          let ratingsObj = calculateRatingAvg(newMarker.ratings);
+          showLandmark(newMarker.landmark,null, null, ratingsObj);
+        })
       })
-      .then(response => response.json())
-      .then(newMarker => {
-        let ratingsObj = calculateRatingAvg(newMarker.ratings);
-        showLandmark(newMarker.landmark,null, null, ratingsObj);
+      .catch(err =>{
+        alert(err)
+        window.location.href= '/login'
+  
       })
     })
     ratingsDiv.children[i].addEventListener('mouseover', () => {
@@ -275,4 +291,18 @@ function calculateRatingAvg(ratingsArray) {
     ratings = {avg, total};
   }
   return ratings;
+}
+
+function checkLoginStatus(){
+  return new Promise((resolve, reject) => {
+    fetch('/login-status')
+      .then(response => response.json())
+      .then(loginStatus => {
+        if(loginStatus.isLoggedIn){
+          return resolve(loginStatus.username);
+        } else {
+          return reject("You need to be logged in to do that");
+        }
+      })
+  });
 }
